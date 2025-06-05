@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 10% 3%;
+    --foreground: 0 0% 86%;
+    --card: 210 10% 5%;
+    --card-foreground: 0 0% 86%;
+    --popover: 210 10% 3%;
+    --popover-foreground: 0 0% 86%;
+    --primary: 0 0% 86%;
+    --primary-foreground: 210 10% 3%;
+    --secondary: 210 8% 8%;
+    --secondary-foreground: 0 0% 86%;
+    --muted: 210 8% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 197 37% 24%;
+    --accent-foreground: 0 0% 86%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 86%;
+    --border: 210 8% 10%;
+    --input: 210 8% 10%;
+    --ring: 0 0% 86%;
+    --radius: 0.5rem;
+
+    /* Custom color variables matching pulik.dev */
+    --red-accent: 5 54% 52%;
+    --teal-accent: 173 38% 46%;
+    --blue-accent: 217 26% 51%;
+    --neutral-accent: 100 1% 39%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    color: #dbdbda;
+    background-color: #050c0c;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl mb-4;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl mb-3;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl mb-2;
+  }
+
+  a {
+    @apply text-teal-accent hover:text-blue-accent transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-4xl mx-auto px-8 sm:px-12;
+  }
+
+  .section {
+    @apply py-8 md:py-12;
+  }
+
+  .project-card {
+    @apply bg-card rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+  }
+
+  .badge-tech {
+    @apply px-2 py-1 bg-secondary text-xs rounded-full mr-1 mb-1;
+  }
+
+  .nav-pill {
+    @apply px-3 py-1 rounded-full transition-colors duration-200;
+  }
+
+  .nav-pill-active {
+    @apply bg-secondary;
+  }
+
+  .section-title {
+    @apply text-sm uppercase tracking-widest text-muted-foreground mb-3 font-semibold;
+  }
+
+  /* Skill tree tooltip styles to ensure they're always on top */
+  .fixed-tooltip {
+    z-index: 9999 !important; /* Extremely high z-index to ensure it's always on top */
+    position: relative; /* Ensure proper stacking context */
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5)); /* Add subtle shadow for better visibility */
+  }
+
+  .text-red-accent {
+    color: hsl(var(--red-accent));
+  }
+
+  .text-teal-accent {
+    color: hsl(var(--teal-accent));
+  }
+
+  .text-blue-accent {
+    color: hsl(var(--blue-accent));
+  }
+
+  .text-neutral-accent {
+    color: hsl(var(--neutral-accent));
+  }
+
+  .bg-red-accent {
+    background-color: hsl(var(--red-accent));
+  }
+
+  .bg-teal-accent {
+    background-color: hsl(var(--teal-accent));
+  }
+
+  .bg-blue-accent {
+    background-color: hsl(var(--blue-accent));
+  }
+
+  .bg-neutral-accent {
+    background-color: hsl(var(--neutral-accent));
+  }
+}
