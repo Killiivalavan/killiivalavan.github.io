@@ -36,7 +36,7 @@ export default function SkillTree() {
     return (
       <div 
         ref={containerRef}
-        className="relative w-full max-w-[800px] h-[800px] mx-auto bg-[#050c0c] rounded-full border border-border/30 overflow-hidden"
+        className="relative w-full max-w-[800px] h-[800px] mx-auto bg-background rounded-full border border-border/30 overflow-hidden"
         style={{ aspectRatio: '1/1' }}
       >
         {/* Placeholder content */}
@@ -136,11 +136,11 @@ export default function SkillTree() {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full max-w-[800px] h-[800px] mx-auto bg-[#050c0c] rounded-full border border-border/30 overflow-hidden"
+      className="relative w-full max-w-[800px] h-[800px] mx-auto bg-background rounded-full border border-border/30 overflow-hidden"
       style={{ aspectRatio: '1/1' }}
     >
       {/* Single subtle glow effect */}
-      <div className="absolute inset-0 bg-gradient-radial from-teal-accent/5 to-transparent opacity-20 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-radial from-primary/10 to-transparent opacity-30 pointer-events-none" />
       
       {/* SVG Layer for connections - Always visible now */}
       <svg 

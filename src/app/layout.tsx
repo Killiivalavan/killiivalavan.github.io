@@ -13,8 +13,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Your Name - Portfolio",
+  title: "Killiivalavan",
   description: "Personal portfolio website showcasing projects, skills, and experience",
+  icons: {
+    icon: [
+      {
+        url: "/images/favicon.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/images/favicon.png",
+        sizes: "16x16",
+        type: "image/png",
+      }
+    ],
+    apple: [
+      {
+        url: "/images/favicon.png",
+        sizes: "180x180",
+        type: "image/png",
+      }
+    ],
+    shortcut: "/images/favicon.png",
+  },
 };
 
 export default function RootLayout({

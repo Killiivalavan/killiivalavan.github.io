@@ -9,10 +9,6 @@ export default function Skills() {
       <div className="container-custom">
         <div className="mb-8">
           <p className="section-title">Technical Proficiency</p>
-          <h2 className="text-3xl font-bold">Skills</h2>
-          <p className="mt-2 text-muted-foreground">
-            Explore my technical skills and areas of expertise visualized as an interactive skill tree.
-          </p>
         </div>
 
         <div className="flex flex-col items-center">

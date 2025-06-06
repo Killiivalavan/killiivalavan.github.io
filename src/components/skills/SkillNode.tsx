@@ -96,7 +96,7 @@ export default function SkillNode({
   return (
     <div
       id={`skill-node-${node.id}`}
-      className={`absolute rounded-full flex items-center justify-center bg-[#050c0c] 
+      className={`absolute rounded-full flex items-center justify-center bg-background 
                  ${glowIntensity} ${borderIntensity} border-2 transition-all duration-300
                  hover:shadow-lg hover:shadow-teal-accent/30 hover:border-teal-accent
                  ${animationClass}`}
@@ -118,7 +118,7 @@ export default function SkillNode({
       {mounted && showTooltip && (
         <div 
           className={`${tooltipPosition.className} 
-                    fixed-tooltip bg-[#050c0c]/95 text-popover-foreground px-2 py-1 rounded text-xs 
+                    fixed-tooltip bg-card/95 text-card-foreground px-2 py-1 rounded text-xs 
                     whitespace-nowrap transition-opacity duration-200 border border-border/30 backdrop-blur-sm
                     ${isHovered ? 'opacity-100 font-medium' : 'opacity-80'}`}
           style={{ 

@@ -1,12 +1,12 @@
 'use client';
 
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Carousel } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState, useCallback } from "react";
 
 type Project = {
   id: number;
@@ -88,98 +88,176 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
-  // Determine peek size based on screen width
-  const [peekSize, setPeekSize] = useState(60);
-  const [blurAmount, setBlurAmount] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isChangingPage, setIsChangingPage] = useState(false);
+  const projectsPerPage = 4;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
   
+  // Get current page projects with placeholders for incomplete pages
+  const getCurrentPageProjects = () => {
+    const startIndex = currentPage * projectsPerPage;
+    const pageProjects = projects.slice(startIndex, startIndex + projectsPerPage);
+    
+    // If we have less than 4 projects, add placeholders to maintain grid structure
+    if (pageProjects.length < projectsPerPage) {
+      const placeholdersNeeded = projectsPerPage - pageProjects.length;
+      const placeholders = Array(placeholdersNeeded).fill(null);
+      return [...pageProjects, ...placeholders];
+    }
+    
+    return pageProjects;
+  };
+  
+  // Handle pagination with animation and looping
+  const goToNextPage = useCallback(() => {
+    if (!isChangingPage) {
+      setIsChangingPage(true);
+      setTimeout(() => {
+        setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0)); // Loop to first page
+        setIsChangingPage(false);
+      }, 300);
+    }
+  }, [totalPages, isChangingPage]);
+  
+  const goToPrevPage = useCallback(() => {
+    if (!isChangingPage) {
+      setIsChangingPage(true);
+      setTimeout(() => {
+        setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1)); // Loop to last page
+        setIsChangingPage(false);
+      }, 300);
+    }
+  }, [totalPages, isChangingPage]);
+  
+  // Add keyboard navigation
   useEffect(() => {
-    const updateSizes = () => {
-      // Responsive peek size based on screen width
-      if (window.innerWidth >= 1280) {
-        setPeekSize(100); // Large screens
-        setBlurAmount(2.5); // More blur on larger screens
-      } else if (window.innerWidth >= 768) {
-        setPeekSize(80);  // Medium screens
-        setBlurAmount(2); // Medium blur
-      } else {
-        setPeekSize(40);  // Small screens
-        setBlurAmount(1.5); // Less blur for better mobile experience
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        goToNextPage();
+      } else if (e.key === 'ArrowLeft') {
+        goToPrevPage();
       }
     };
     
-    updateSizes();
-    window.addEventListener('resize', updateSizes);
-    return () => window.removeEventListener('resize', updateSizes);
-  }, []);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [goToNextPage, goToPrevPage]);
 
-  // Render each project card
-  const renderProjectCard = (project: Project) => (
-    <Card key={project.id} className="bg-card border-border/10 overflow-hidden h-full shadow-lg flex flex-col">
-      <CardHeader className="pt-6">
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-xl">{project.title}</CardTitle>
-          <div className="text-sm text-muted-foreground">{project.year}</div>
-        </div>
-        <CardDescription className="text-muted-foreground">{project.status}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="text-sm mb-4">{project.description}</p>
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
-            <Badge key={tech} variant="secondary" className="text-xs">
-              {tech}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter className="flex gap-3 mt-auto">
-        {project.githubUrl && (
-          <Link
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground hover:text-teal-accent flex items-center gap-1"
-          >
-            GitHub <ExternalLink size={12} />
-          </Link>
-        )}
-        {project.liveUrl && (
-          <Link
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground hover:text-teal-accent flex items-center gap-1"
-          >
-            Live Demo <ExternalLink size={12} />
-          </Link>
-        )}
-      </CardFooter>
-    </Card>
-  );
+  // Get projects for the current page (with placeholders)
+  const currentProjects = getCurrentPageProjects();
+  
+  // Render each project card or placeholder
+  const renderItem = (item: Project | null, index: number) => {
+    // If it's a placeholder, render an empty div with the same dimensions
+    if (item === null) {
+      return (
+        <div 
+          key={`placeholder-${index}`} 
+          className="w-full opacity-0" 
+          style={{ height: '272px', minHeight: '272px' }}
+          aria-hidden="true" 
+        />
+      );
+    }
+    
+    // Otherwise render the actual project card
+    return (
+      <Link
+        href={item.githubUrl || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        key={item.id}
+        className="block w-full group"
+      >
+        <Card 
+          className={`bg-card border-border/10 overflow-hidden shadow-lg flex flex-col transition-all duration-300 
+            group-hover:shadow-xl group-hover:scale-[1.02] group-hover:border-teal-accent/40 
+            group-hover:shadow-teal-accent/10 cursor-pointer
+            ${isChangingPage ? 'opacity-0' : 'opacity-100'}`}
+          style={{ height: '272px', minHeight: '272px' }}
+        >
+          <CardHeader className="pt-6 pb-3">
+            <CardTitle className="text-xl group-hover:text-teal-accent transition-colors duration-300">{item.title}</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-grow flex flex-col">
+            <p className="text-sm mb-4 line-clamp-4 flex-grow">{item.description}</p>
+            <div className="flex flex-wrap gap-2 mt-auto">
+              {item.technologies.map((tech) => (
+                <Badge key={tech} variant="secondary" className="text-xs">
+                  {tech}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+    );
+  };
 
   return (
     <section className="section py-16" id="projects">
       <div className="container-custom">
         <div className="mb-8">
           <p className="section-title">BUILDS & BREAKTHROUGHS</p>
-          <h2 className="text-3xl font-bold">Featured Projects</h2>
-          <p className="mt-2 text-muted-foreground">
-            I build projects from 0 to 1, turning ideas into reality. Take a look at some of my favorite projects below.
-          </p>
         </div>
 
-        <div>
-          <Carousel 
-            peekSize={peekSize}
-            blurAmount={blurAmount}
-            showControls={true}
-            gap={16}
-            className="pb-8"
-            autoPlay={true}
-            autoPlayInterval={6000}
+        <div className="relative">
+          {/* Left Arrow */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToPrevPage}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 rounded-full z-10 hidden md:flex hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
+            aria-label="Previous page"
           >
-            {projects.map((project) => renderProjectCard(project))}
-          </Carousel>
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          
+          {/* Fixed width and height grid to ensure consistent card sizes */}
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6 mb-6" style={{
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gridAutoRows: "272px"
+          }}>
+            {currentProjects.map((project, index) => renderItem(project, index))}
+          </div>
+          
+          {/* Right Arrow */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToNextPage}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 rounded-full z-10 hidden md:flex hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
+            aria-label="Next page"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+          
+          {/* Mobile Pagination Controls */}
+          <div className="flex justify-center items-center gap-4 mt-8 md:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goToPrevPage}
+              className="rounded-full hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            
+            <div className="text-sm text-muted-foreground">
+              Page {currentPage + 1} of {totalPages}
+            </div>
+            
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goToNextPage}
+              className="rounded-full hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
+              aria-label="Next page"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         <div className="mt-12">

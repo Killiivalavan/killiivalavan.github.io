@@ -55,6 +55,68 @@ export default {
         'teal-accent': 'hsl(var(--teal-accent))',
         'blue-accent': 'hsl(var(--blue-accent))',
         'neutral-accent': 'hsl(var(--neutral-accent))',
+        
+        // Twilight palette for direct usage
+        'space-cadet': {
+          DEFAULT: '#1f2041',
+          100: '#06070d',
+          200: '#0d0d1a',
+          300: '#131427',
+          400: '#191a34',
+          500: '#1f2041',
+          600: '#3a3c79',
+          700: '#585bae',
+          800: '#8f91c9',
+          900: '#c7c8e4'
+        },
+        'english-violet': {
+          DEFAULT: '#4b3f72', 
+          100: '#0f0d17',
+          200: '#1e192e', 
+          300: '#2d2645', 
+          400: '#3c335c', 
+          500: '#4b3f72', 
+          600: '#67579e',
+          700: '#8c7fb8', 
+          800: '#b2a9d0',
+          900: '#d9d4e7'
+        },
+        'paynes-gray': {
+          DEFAULT: '#19647e',
+          100: '#05141a',
+          200: '#0a2933',
+          300: '#0f3d4d',
+          400: '#145266',
+          500: '#19647e',
+          600: '#2596bb',
+          700: '#4cb8dc',
+          800: '#88d0e7',
+          900: '#c3e7f3'
+        },
+        'ash-gray': {
+          DEFAULT: '#a8b7ab',
+          100: '#202621',
+          200: '#404d43',
+          300: '#607364',
+          400: '#829787',
+          500: '#a8b7ab',
+          600: '#bac5bc',
+          700: '#cbd4cd',
+          800: '#dde2de',
+          900: '#eef1ee'
+        },
+        'bittersweet': {
+          DEFAULT: '#ff6663',
+          100: '#460100',
+          200: '#8d0200',
+          300: '#d30400',
+          400: '#ff1e1b',
+          500: '#ff6663',
+          600: '#ff8381',
+          700: '#ffa2a0',
+          800: '#ffc1c0',
+          900: '#ffe0df'
+        }
       },
       borderRadius: {
         lg: 'var(--radius)',

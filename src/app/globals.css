@@ -31,6 +31,44 @@
     --blue-accent: 217 26% 51%;
     --neutral-accent: 100 1% 39%;
   }
+  
+  /* Warm Beige Theme with Violet Accents */
+  .theme-warm-beige {
+    --background: 34 57% 93%;            /* Refined warm beige (foundation) */
+    --foreground: 230 15% 10%;           /* Charcoal ink (for personality-rich text) */
+
+    --card: 34 57% 98%;                  /* Slightly lighter than background */
+    --card-foreground: 230 15% 10%;
+
+    --popover: 34 57% 95%;
+    --popover-foreground: 230 15% 10%;
+
+    --primary: 210 25% 36%;              /* Bold desaturated navy (focus color) */
+    --primary-foreground: 34 57% 98%;    /* Light text on primary */
+
+    --secondary: 36 20% 85%;             /* Sandstone gray */
+    --secondary-foreground: 230 15% 10%;
+
+    --muted: 36 15% 88%;                 /* Soft neutral background block */
+    --muted-foreground: 230 10% 45%;     /* Stone text */
+
+    --accent: 270 34% 54%;               /* Earthy violet-grey (expressive but subtle) */
+    --accent-foreground: 34 57% 98%;
+
+    --destructive: 4 60% 48%;            /* Warm muted red (assertive, not harsh) */
+    --destructive-foreground: 34 57% 98%;
+
+    --border: 34 25% 80%;
+    --input: 34 25% 90%;
+    --ring: 270 34% 54%;
+    --radius: 0.5rem;
+
+    /* Optional expressive accents */
+    --red-accent: 2 64% 42%;             /* Deep terracotta */
+    --teal-accent: 168 35% 44%;          /* Sage teal */
+    --blue-accent: 218 28% 48%;          /* Storm blue */
+    --neutral-accent: 38 18% 52%;        /* Warm stone */
+  }
 }
 
 @layer base {
@@ -44,8 +82,10 @@
 
   body {
     @apply bg-background text-foreground;
-    color: #dbdbda;
-    background-color: #050c0c;
+  }
+
+  body.theme-warm-beige {
+    /* No need for hardcoded colors - the theme CSS variables handle this */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -135,5 +175,10 @@
 
   .bg-neutral-accent {
     background-color: hsl(var(--neutral-accent));
+  }
+  
+  /* Theme toggle button styles */
+  .theme-toggle {
+    @apply fixed right-4 bottom-4 z-50 p-2 rounded-full bg-secondary hover:bg-teal-accent hover:text-background transition-colors duration-200;
   }
 }

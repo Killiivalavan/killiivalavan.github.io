@@ -6,6 +6,7 @@ import ContactCards from '@/components/sections/ContactCards';
 import About from '@/components/sections/About';
 import Projects from '@/components/sections/Projects';
 import Skills from '@/components/sections/Skills';
+import ThemeToggle from '@/components/layout/ThemeToggle';
 
 export default function ClientBody() {
   return (
@@ -18,6 +19,7 @@ export default function ClientBody() {
         <Skills />
       </main>
       <Footer />
+      <ThemeToggle />
     </div>
   );
 }
