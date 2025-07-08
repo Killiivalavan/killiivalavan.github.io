@@ -5,7 +5,7 @@ import SkillTree from "@/components/skills/SkillTree";
 
 export default function Skills() {
   return (
-    <section className="section py-16" id="skills">
+    <section className="section py-4" id="skills">
       <div className="container-custom">
         <div className="mb-8">
           <p className="section-title">Technical Proficiency</p>

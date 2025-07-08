@@ -1,6 +1,5 @@
 'use client';
 
-import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
 import ContactCards from '@/components/sections/ContactCards';
 import About from '@/components/sections/About';
@@ -18,7 +17,6 @@ export default function ClientBody() {
         <Projects />
         <Skills />
       </main>
-      <Footer />
       <ThemeToggle />
     </div>
   );

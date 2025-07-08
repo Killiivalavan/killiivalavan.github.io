@@ -11,7 +11,7 @@ export default function Hero() {
             <h1 className="text-5xl font-bold mb-2">
               Hi, I'm <span className="text-red-accent">Killiivalavan</span>
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-0">
               A developer who builds things like it's a hobby, a habit, and occasionally, a cry for help...
             </p>            
           </div>

@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 
 export default function About() {
   return (
-    <section className="mt-8">
+    <section className="mt-4">
       <div className="container-custom">
         <p className="section-title">ABOUT</p>
         <p className="mb-4">

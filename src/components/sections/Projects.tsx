@@ -195,7 +195,7 @@ export default function Projects() {
   };
 
   return (
-    <section className="section py-16" id="projects">
+    <section className="section pb-4" id="projects">
       <div className="container-custom">
         <div className="mb-8">
           <p className="section-title">BUILDS & BREAKTHROUGHS</p>

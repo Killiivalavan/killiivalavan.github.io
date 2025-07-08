@@ -24,7 +24,7 @@ export default function ContactCards() {
   };
 
   return (
-    <section className="pt-3 pb-6">
+    <section className="pt-3 pb-3">
       <div className="container-custom">
         <div className="flex justify-start gap-3">
           <Link
