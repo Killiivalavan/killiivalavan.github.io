@@ -34,7 +34,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: "AI Game Code Iterator",
+    title: "Recode",
     description: "An AI tool that iteratively reviews, improves, and refactors code using a local language model, streamlining the development process using Groq API and Ollama as fallback.",
     year: "2024 - Present",
     status: "Active",
@@ -45,7 +45,7 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: "AI Conspiracy Theorist",
+    title: "ParanoiaNet",
     description: "An AI-powered creative writing tool that transforms simple user inputs into elaborate conspiracy theories, complete with fictional evidence, mysterious organizations, and interconnected events.",
     year: "2025",
     status: "Completed",
@@ -55,7 +55,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Interactive Story Generator",
+    title: "TaleForge",
     description: "An offline AI-powered story generator that uses a local language model to create dynamic, branching narratives based on user input in real time.",
     year: "2025",
     status: "Completed",
@@ -77,7 +77,7 @@ const projects: Project[] = [
   },
   {
     id: 6,
-    title: "PySummarizer",
+    title: "Simple-it",
     description: "A Python summarizer that converts PDFs and audio to concise text and audio summaries.",
     year: "2025",
     status: "Completed",
