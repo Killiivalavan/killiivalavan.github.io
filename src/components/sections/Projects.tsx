@@ -40,7 +40,7 @@ const projects: Project[] = [
     status: "Active",
     imageUrl: "/images/projects/code-iterator-ai.png",
     technologies: ["Python", "Next.js", "Groq API", "Ollama"],
-    githubUrl: "https://github.com/Killiivalavan/code-iterator-AI",
+    githubUrl: "https://github.com/Killiivalavan/Recode",
     //liveUrl: "https://example.com",
   },
   {
@@ -51,7 +51,7 @@ const projects: Project[] = [
     status: "Completed",
     imageUrl: "/images/projects/conspiracy-ai.png",
     technologies: ["Streamlit", "Python"],
-    githubUrl: "https://github.com/Killiivalavan/AI-conspiracy-theorist",
+    githubUrl: "https://github.com/Killiivalavan/ParanoiaNet",
   },
   {
     id: 4,
@@ -61,7 +61,7 @@ const projects: Project[] = [
     status: "Completed",
     imageUrl: "https://placehold.co/600x400/48a398/dbdbda",
     technologies: ["Python"],
-    githubUrl: "https://github.com/Killiivalavan/Story-Genarator",
+    githubUrl: "https://github.com/Killiivalavan/TaleForge",
     //liveUrl: "https://example.com",
   },
   {
@@ -83,7 +83,7 @@ const projects: Project[] = [
     status: "Completed",
     imageUrl: "https://placehold.co/600x400/5c7ca9/dbdbda",
     technologies: ["Python"],
-    githubUrl: "https://github.com/Killiivalavan/Summarizer-using-LLM",
+    githubUrl: "https://github.com/Killiivalavan/Simple-it",
   },
 ];
 
