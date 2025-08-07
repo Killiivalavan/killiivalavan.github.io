@@ -138,7 +138,7 @@ export default function Hero() {
                   href="https://open.spotify.com/user/31aqr2jxg755zil5kcmw72vqdnda?si=ba02211e78a84c11"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-card border border-dashed border-white/40 rounded-lg hover:font-semibold transition-all duration-200 ml-1 text-sm font-medium text-foreground"
+                  className="flex items-center gap-2 px-4 py-2 bg-card border border-dashed border-border/40 rounded-lg hover:font-semibold transition-all duration-200 ml-1 text-sm font-medium text-foreground"
                   style={{ userSelect: 'none' }}
                 >
                   <SiSpotify className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
