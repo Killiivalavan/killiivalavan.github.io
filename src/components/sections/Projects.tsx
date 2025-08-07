@@ -1,12 +1,8 @@
 'use client';
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState, useCallback } from "react";
+import { ExternalLink, BookOpen, Code, Brain, FileText, Calculator, Sparkles } from "lucide-react";
 
 type Project = {
   id: number;
@@ -18,6 +14,8 @@ type Project = {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  icon: React.ComponentType<{ className?: string }>;
+  iconColor: string;
 };
 
 const projects: Project[] = [
@@ -30,7 +28,8 @@ const projects: Project[] = [
     imageUrl: "/images/projects/DAISY.png",
     technologies: ["Python"],
     githubUrl: "https://github.com/Killiivalavan/DAISY",
-    //liveUrl: "https://example.com",
+    icon: Brain,
+    iconColor: "bg-blue-100 text-blue-600",
   },
   {
     id: 2,
@@ -41,7 +40,8 @@ const projects: Project[] = [
     imageUrl: "/images/projects/code-iterator-ai.png",
     technologies: ["Python", "Next.js", "Groq API", "Ollama"],
     githubUrl: "https://github.com/Killiivalavan/Recode",
-    //liveUrl: "https://example.com",
+    icon: Code,
+    iconColor: "bg-purple-100 text-purple-600",
   },
   {
     id: 3,
@@ -52,6 +52,8 @@ const projects: Project[] = [
     imageUrl: "/images/projects/conspiracy-ai.png",
     technologies: ["Streamlit", "Python"],
     githubUrl: "https://github.com/Killiivalavan/ParanoiaNet",
+    icon: Sparkles,
+    iconColor: "bg-yellow-100 text-yellow-600",
   },
   {
     id: 4,
@@ -62,7 +64,8 @@ const projects: Project[] = [
     imageUrl: "https://placehold.co/600x400/48a398/dbdbda",
     technologies: ["Python"],
     githubUrl: "https://github.com/Killiivalavan/TaleForge",
-    //liveUrl: "https://example.com",
+    icon: BookOpen,
+    iconColor: "bg-green-100 text-green-600",
   },
   {
     id: 5,
@@ -73,7 +76,8 @@ const projects: Project[] = [
     imageUrl: "/images/projects/exp-tracker.png",
     technologies: ["Flask", "JavaScript", "HTML", "CSS"],
     githubUrl: "https://github.com/Killiivalavan/Expense-Tracker",
-    //liveUrl: "https://example.com",
+    icon: Calculator,
+    iconColor: "bg-red-100 text-red-600",
   },
   {
     id: 6,
@@ -84,180 +88,55 @@ const projects: Project[] = [
     imageUrl: "https://placehold.co/600x400/5c7ca9/dbdbda",
     technologies: ["Python"],
     githubUrl: "https://github.com/Killiivalavan/Simple-it",
+    icon: FileText,
+    iconColor: "bg-indigo-100 text-indigo-600",
   },
 ];
 
 export default function Projects() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [isChangingPage, setIsChangingPage] = useState(false);
-  const projectsPerPage = 4;
-  const totalPages = Math.ceil(projects.length / projectsPerPage);
-  
-  // Get current page projects with placeholders for incomplete pages
-  const getCurrentPageProjects = () => {
-    const startIndex = currentPage * projectsPerPage;
-    const pageProjects = projects.slice(startIndex, startIndex + projectsPerPage);
-    
-    // If we have less than 4 projects, add placeholders to maintain grid structure
-    if (pageProjects.length < projectsPerPage) {
-      const placeholdersNeeded = projectsPerPage - pageProjects.length;
-      const placeholders = Array(placeholdersNeeded).fill(null);
-      return [...pageProjects, ...placeholders];
-    }
-    
-    return pageProjects;
-  };
-  
-  // Handle pagination with animation and looping
-  const goToNextPage = useCallback(() => {
-    if (!isChangingPage) {
-      setIsChangingPage(true);
-      setTimeout(() => {
-        setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0)); // Loop to first page
-        setIsChangingPage(false);
-      }, 300);
-    }
-  }, [totalPages, isChangingPage]);
-  
-  const goToPrevPage = useCallback(() => {
-    if (!isChangingPage) {
-      setIsChangingPage(true);
-      setTimeout(() => {
-        setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1)); // Loop to last page
-        setIsChangingPage(false);
-      }, 300);
-    }
-  }, [totalPages, isChangingPage]);
-  
-  // Add keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') {
-        goToNextPage();
-      } else if (e.key === 'ArrowLeft') {
-        goToPrevPage();
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goToNextPage, goToPrevPage]);
-
-  // Get projects for the current page (with placeholders)
-  const currentProjects = getCurrentPageProjects();
-  
-  // Render each project card or placeholder
-  const renderItem = (item: Project | null, index: number) => {
-    // If it's a placeholder, render an empty div with the same dimensions
-    if (item === null) {
-      return (
-        <div 
-          key={`placeholder-${index}`} 
-          className="w-full opacity-0" 
-          style={{ height: '272px', minHeight: '272px' }}
-          aria-hidden="true" 
-        />
-      );
-    }
-    
-    // Otherwise render the actual project card
-    return (
-      <Link
-        href={item.githubUrl || "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        key={item.id}
-        className="block w-full group"
-      >
-        <Card 
-          className={`bg-card border-border/10 overflow-hidden shadow-lg flex flex-col transition-all duration-300 
-            group-hover:shadow-xl group-hover:scale-[1.02] group-hover:border-teal-accent/40 
-            group-hover:shadow-teal-accent/10 cursor-pointer
-            ${isChangingPage ? 'opacity-0' : 'opacity-100'}`}
-          style={{ height: '272px', minHeight: '272px' }}
-        >
-          <CardHeader className="pt-6 pb-3">
-            <CardTitle className="text-xl group-hover:text-teal-accent transition-colors duration-300">{item.title}</CardTitle>
-          </CardHeader>
-          <CardContent className="flex-grow flex flex-col">
-            <p className="text-sm mb-4 line-clamp-4 flex-grow">{item.description}</p>
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {item.technologies.map((tech) => (
-                <Badge key={tech} variant="secondary" className="text-xs">
-                  {tech}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    );
-  };
-
   return (
     <section className="section pb-4" id="projects">
       <div className="container-custom">
         <div className="mb-8">
-          <p className="section-title">BUILDS & BREAKTHROUGHS</p>
+          <p className="section-title">Projects</p>
         </div>
 
-        <div className="relative">
-          {/* Left Arrow */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={goToPrevPage}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 rounded-full z-10 hidden md:flex hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
-            aria-label="Previous page"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          
-          {/* Fixed width and height grid to ensure consistent card sizes */}
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6 mb-6" style={{
-            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-            gridAutoRows: "272px"
-          }}>
-            {currentProjects.map((project, index) => renderItem(project, index))}
-          </div>
-          
-          {/* Right Arrow */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={goToNextPage}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 rounded-full z-10 hidden md:flex hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
-            aria-label="Next page"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          
-          {/* Mobile Pagination Controls */}
-          <div className="flex justify-center items-center gap-4 mt-8 md:hidden">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToPrevPage}
-              className="rounded-full hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
-              aria-label="Previous page"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            
-            <div className="text-sm text-muted-foreground">
-              Page {currentPage + 1} of {totalPages}
-            </div>
-            
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToNextPage}
-              className="rounded-full hover:bg-card hover:text-teal-accent hover:border-teal-accent/40"
-              aria-label="Next page"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {projects.map((project) => {
+            const IconComponent = project.icon;
+            return (
+              <div key={project.id} className="bg-card border border-border/20 rounded-lg p-6 group hover:border-teal-accent/30 hover:shadow-lg transition-all duration-300">
+                <div className="flex items-start space-x-5">
+                  {/* Circular Icon */}
+                  <div className={`w-14 h-14 rounded-full ${project.iconColor} flex items-center justify-center flex-shrink-0`}>
+                    <IconComponent className="w-7 h-7" />
+                  </div>
+                  
+                  {/* Project Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-3">
+                      <h3 className="text-xl font-semibold text-foreground group-hover:text-teal-accent transition-colors">
+                        {project.title}
+                      </h3>
+                      {project.githubUrl && (
+                        <Link
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-teal-accent transition-colors"
+                        >
+                          <ExternalLink className="w-5 h-5" />
+                        </Link>
+                      )}
+                    </div>
+                    <p className="text-base text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-12">

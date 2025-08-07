@@ -1,27 +1,157 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Github, Twitter, Linkedin, Music, FileDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Hero() {
+  const [copied, setCopied] = useState(false);
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const indiaTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+      const hours = indiaTime.getHours().toString().padStart(2, '0');
+      const minutes = indiaTime.getMinutes().toString().padStart(2, '0');
+      setCurrentTime(`${hours}${minutes} hrs`);
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 60000); // Update every minute
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleEmailCopy = async () => {
+    try {
+      await navigator.clipboard.writeText('killiivalavan.inbox@gmail.com');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email');
+    }
+  };
+
   return (
-    <section className="section pt-20 pb-4" id="about">
-      <div className="container-custom">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          <div className="flex-1">
-            <h1 className="text-5xl font-bold mb-2">
-              Hi, I'm <span className="text-red-accent">Killiivalavan</span>
-            </h1>
-            <p className="text-muted-foreground mb-0">
-              A developer who builds things like it's a hobby, a habit, and occasionally, a cry for help...
-            </p>            
-          </div>
-          <div className="flex-shrink-0">
-            <div className="w-40 h-40 rounded-full border-4 border-muted overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center py-12 lg:py-20" id="hero">
+      <div className="container-custom flex-1 flex flex-col justify-center">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
+          {/* Left Section - Profile Photo with Footer Info */}
+          <div className="w-full lg:w-2/5 flex flex-col items-center lg:items-start space-y-6 justify-center lg:pr-8">
+            <div className="w-72 h-80 sm:w-80 sm:h-96 lg:w-[450px] lg:h-[540px] rounded-2xl border border-border/30 overflow-hidden bg-card/10">
               <img 
                 src="/images/profile.jpg" 
-                alt="Profile" 
+                alt="Killiivalavan" 
                 className="w-full h-full object-cover"
               />
+            </div>
+            
+            {/* Footer Information - Below the image */}
+            <div className="flex items-center justify-between text-sm text-muted-foreground w-72 h-8 sm:w-80 sm:h-8 lg:w-[450px] lg:h-8">
+              <span>Coimbatore, India</span>
+              <span>{currentTime}</span>
+            </div>
+          </div>
+
+          {/* Right Section - Content */}
+          <div className="w-full lg:w-3/5 space-y-6 lg:pl-4">
+            {/* Greeting and Introduction */}
+            <div className="space-y-3">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                Hi, I'm <span className="text-red-accent">Killie</span>
+              </h1>
+              <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+                A developer who builds things like it's a hobby, a habit, and occasionally, a cry for help...
+              </p>
+            </div>
+
+            {/* Contact and Social Links */}
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  href="https://www.linkedin.com/in/killiivalavan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-secondary hover:bg-blue-accent hover:text-background transition-colors duration-200"
+                >
+                  <Linkedin size={18} />
+                </Link>
+                <Link
+                  href="https://x.com/killiivalavan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-secondary hover:bg-blue-accent hover:text-background transition-colors duration-200"
+                >
+                  <Twitter size={18} />
+                </Link>
+                <Link
+                  href="https://github.com/Killiivalavan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-secondary hover:bg-neutral-accent hover:text-background transition-colors duration-200"
+                >
+                  <Github size={18} />
+                </Link>
+                <Link
+                  href="/documents/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-md bg-secondary hover:bg-teal-accent hover:text-background transition-colors duration-200 text-sm sm:text-base font-medium h-10 flex items-center"
+                  aria-label="View Resume"
+                >
+                  resume
+                </Link>
+              </div>
+              
+              <div className="flex items-center gap-2 text-sm sm:text-base">
+                <Button
+                  variant="ghost"
+                  className="p-0 h-auto text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+                  onClick={handleEmailCopy}
+                >
+                  killiivalavan.inbox@gmail.com
+                </Button>
+                {copied && (
+                  <span className="text-teal-accent text-sm font-medium">Copied!</span>
+                )}
+              </div>
+            </div>
+
+            {/* About/Philosophy Section with Bullet Points */}
+            <div className="space-y-2 text-muted-foreground text-sm sm:text-base leading-relaxed">
+              <p><span className="text-red-accent">•</span> I develop websites, apps and occasionally i make music too.</p>
+              <p><span className="text-red-accent">•</span> All my projects start with a half-joke, a weird itch, or a late-night 'what if?'.</p>
+              <p><span className="text-red-accent">•</span> Most things I make are either useful, fun, or both.</p>
+              <p><span className="text-red-accent">•</span> I like fast builds, sharp code, and ideas that stick.</p>
+              <p><span className="text-red-accent">•</span> Building what I want to see exist — for now, that's the job.</p>
+            </div>
+
+            {/* Spotify Link */}
+            <div className="text-muted-foreground text-sm sm:text-base">
+              <span>Resume's here. But you can find the unfiltered version of me </span>
+              <span className="inline-flex items-center">
+                <span>on </span>
+                <Button
+                  variant="outline"
+                  className="inline-flex items-center gap-2 hover:bg-card hover:text-teal-accent hover:border-teal-accent/40 border-border/30 ml-1"
+                  asChild
+                >
+                  <a href="https://open.spotify.com/user/Killiivalavan" target="_blank" rel="noopener noreferrer">
+                    <Music className="h-4 w-4 sm:h-5 sm:w-5" />
+                    Spotify
+                  </a>
+                </Button>
+              </span>
+            </div>
+
+            {/* Under Development Section */}
+            <div className="space-y-2">
+              <h3 className="text-lg sm:text-xl font-semibold">Under Development</h3>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                A music-focused take on Letterboxd, built around community and not just catalogs.
+              </p>
             </div>
           </div>
         </div>
