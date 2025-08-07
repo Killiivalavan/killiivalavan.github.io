@@ -1,31 +1,52 @@
 'use client';
 
-import Link from 'next/link';
-import { Github, Linkedin, Twitter } from 'lucide-react';
+import { useState, useEffect } from 'react';
+
+const funnyQuotes = [
+  "Life is like a computer - you can't have it all, you have to choose between RAM and storage.",
+  "Why do Java developers wear glasses? Because they can't C#!",
+  "A SQL query goes into a bar, walks up to two tables and asks, 'Can I join you?'",
+  "The best thing about a boolean is even if you are wrong, you are only off by a bit.",
+  "Real programmers don't use backups, they post their stuff on github and let the rest of the world make copies.",
+  "Operating systems are like underwear, nobody really wants to look at them.",
+  "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+  "It's not a bug, it's an undocumented feature.",
+  "A user interface is like a joke. If you have to explain it, it's not that good.",
+  "If at first you don't succeed, call it version 1.0.",
+  "There are only 10 types of people in the world - those who understand binary and those who don't.",
+  "Hours of trial and error can save you minutes of reading documentation.",
+  "Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.",
+];
 
 export default function Footer() {
-  return (
-    <footer className="py-10 mt-20 border-t border-border/20">
-      <div className="container-custom">
-        <div className="flex justify-center gap-6 mb-4">
-          <Link href="/" className="p-2 rounded-full hover:bg-secondary transition-colors duration-200">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L3 9V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V9L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M9 22V12H15V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </Link>
-        </div>
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
 
-        <div className="flex justify-center gap-4">
-          <Link href="https://github.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-            <Github size={20} />
-          </Link>
-          <Link href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-            <Linkedin size={20} />
-          </Link>
-          <Link href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-            <Twitter size={20} />
-          </Link>
+  // Change quote on component mount (page refresh)
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * funnyQuotes.length);
+    setCurrentQuoteIndex(randomIndex);
+  }, []);
+
+  const handleQuoteClick = () => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * funnyQuotes.length);
+    } while (newIndex === currentQuoteIndex && funnyQuotes.length > 1);
+    setCurrentQuoteIndex(newIndex);
+  };
+
+  return (
+    <footer className="py-4 mt-20 border-t border-border/20">
+      <div className="container-custom">
+        <div className="flex justify-center">
+          <button
+            onClick={handleQuoteClick}
+            className="text-center text-muted-foreground cursor-pointer"
+          >
+            <p className="text-xs italic max-w-xl">
+              "{funnyQuotes[currentQuoteIndex]}"
+            </p>
+          </button>
         </div>
       </div>
     </footer>

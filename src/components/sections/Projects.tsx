@@ -14,7 +14,7 @@ type Project = {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string }> | string;
   iconColor: string;
 };
 
@@ -28,7 +28,7 @@ const projects: Project[] = [
     imageUrl: "/images/projects/DAISY.png",
     technologies: ["Python"],
     githubUrl: "https://github.com/Killiivalavan/DAISY",
-    icon: Brain,
+    icon: "/images/projects/DAISY-logo.png",
     iconColor: "bg-blue-100 text-blue-600",
   },
   {
@@ -98,20 +98,27 @@ export default function Projects() {
     <section className="section pb-4" id="projects">
       <div className="container-custom">
         <div className="mb-8">
-          <p className="section-title">Projects</p>
+          <p className="section-title">Build Logs</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project) => {
-            const IconComponent = project.icon;
             return (
-              <div key={project.id} className="bg-card border border-border/20 rounded-lg p-6 group hover:border-teal-accent/30 hover:shadow-lg transition-all duration-300">
+              <div key={project.id} className="rounded-lg p-6 group hover:shadow-lg transition-all duration-300 shadow-sm">
                 <div className="flex items-start space-x-5">
-                  {/* Circular Icon */}
-                  <div className={`w-14 h-14 rounded-full ${project.iconColor} flex items-center justify-center flex-shrink-0`}>
-                    <IconComponent className="w-7 h-7" />
+                  {/* Circular Icon or Image */}
+                  <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 bg-white/5`}>
+                    {typeof project.icon === 'string' ? (
+                      <img
+                        src={project.icon}
+                        alt={`${project.title} logo`}
+                        className="w-14 h-14 object-contain rounded-full"
+                        style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.10))' }}
+                      />
+                    ) : (
+                      <project.icon className="w-7 h-7" />
+                    )}
                   </div>
-                  
                   {/* Project Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-3">

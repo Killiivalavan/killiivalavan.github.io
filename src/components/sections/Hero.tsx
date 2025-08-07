@@ -1,7 +1,8 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { Github, Twitter, Linkedin, Music, FileDown } from "lucide-react";
+import { Github, Twitter, Linkedin, FileDown } from "lucide-react";
+import { SiSpotify } from "react-icons/si";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -121,11 +122,11 @@ export default function Hero() {
 
             {/* About/Philosophy Section with Bullet Points */}
             <div className="space-y-2 text-muted-foreground text-sm sm:text-base leading-relaxed">
-              <p><span className="text-red-accent">•</span> I develop websites, apps and occasionally i make music too.</p>
-              <p><span className="text-red-accent">•</span> All my projects start with a half-joke, a weird itch, or a late-night 'what if?'.</p>
-              <p><span className="text-red-accent">•</span> Most things I make are either useful, fun, or both.</p>
-              <p><span className="text-red-accent">•</span> I like fast builds, sharp code, and ideas that stick.</p>
-              <p><span className="text-red-accent">•</span> Building what I want to see exist — for now, that's the job.</p>
+              <p><span className="text-muted-foreground">•</span> I develop websites, apps and occasionally i make music too.</p>
+              <p><span className="text-muted-foreground">•</span> All my projects start with a half-joke, a weird itch, or a late-night 'what if?'.</p>
+              <p><span className="text-muted-foreground">•</span> Most things I make are either useful, fun, or both.</p>
+              <p><span className="text-muted-foreground">•</span> I like fast builds, sharp code, and ideas that stick.</p>
+              <p><span className="text-muted-foreground">•</span> Building what I want to see exist — for now, that's the job.</p>
             </div>
 
             {/* Spotify Link */}
@@ -133,16 +134,16 @@ export default function Hero() {
               <span>Resume's here. But you can find the unfiltered version of me </span>
               <span className="inline-flex items-center">
                 <span>on </span>
-                <Button
-                  variant="outline"
-                  className="inline-flex items-center gap-2 hover:bg-card hover:text-teal-accent hover:border-teal-accent/40 border-border/30 ml-1"
-                  asChild
+                <a
+                  href="https://open.spotify.com/user/31aqr2jxg755zil5kcmw72vqdnda?si=ba02211e78a84c11"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-card border border-dashed border-white/40 rounded-lg hover:font-semibold transition-all duration-200 ml-1 text-sm font-medium text-foreground"
+                  style={{ userSelect: 'none' }}
                 >
-                  <a href="https://open.spotify.com/user/Killiivalavan" target="_blank" rel="noopener noreferrer">
-                    <Music className="h-4 w-4 sm:h-5 sm:w-5" />
-                    Spotify
-                  </a>
-                </Button>
+                  <SiSpotify className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                  Spotify
+                </a>
               </span>
             </div>
 

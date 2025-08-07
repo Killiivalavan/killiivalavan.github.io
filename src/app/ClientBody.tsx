@@ -4,6 +4,7 @@ import Hero from '@/components/sections/Hero';
 import Projects from '@/components/sections/Projects';
 import Skills from '@/components/sections/Skills';
 import ThemeToggle from '@/components/layout/ThemeToggle';
+import Footer from '@/components/layout/Footer';
 
 export default function ClientBody() {
   return (
@@ -14,6 +15,7 @@ export default function ClientBody() {
         <Skills />
       </main>
       <ThemeToggle />
+      <Footer />
     </div>
   );
 }
