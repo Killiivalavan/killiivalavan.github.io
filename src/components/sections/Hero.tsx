@@ -57,7 +57,7 @@ export default function Hero() {
           </div>
 
           {/* Right Section - Content */}
-          <div className="w-full lg:w-3/5 space-y-6 lg:pl-4">
+          <div className="w-full lg:w-3/5 space-y-4 lg:pl-4">
             {/* Greeting and Introduction */}
             <div className="space-y-3">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
@@ -69,7 +69,7 @@ export default function Hero() {
             </div>
 
             {/* Contact and Social Links */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-3">
                 <Link
                   href="https://www.linkedin.com/in/killiivalavan/"
@@ -99,21 +99,20 @@ export default function Hero() {
                   href="/documents/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-md bg-secondary hover:bg-teal-accent hover:text-background transition-colors duration-200 text-sm sm:text-base font-medium h-10 flex items-center"
+                  className="p-2 rounded-full bg-secondary hover:bg-teal-accent hover:text-background transition-colors duration-200"
                   aria-label="View Resume"
                 >
-                  resume
+                  <FileDown size={18} />
                 </Link>
               </div>
               
               <div className="flex items-center gap-2 text-sm sm:text-base">
-                <Button
-                  variant="ghost"
-                  className="p-0 h-auto text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+                <button
+                  className="p-0 h-auto text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200 bg-transparent border-none cursor-pointer"
                   onClick={handleEmailCopy}
                 >
                   killiivalavan.inbox@gmail.com
-                </Button>
+                </button>
                 {copied && (
                   <span className="text-teal-accent text-sm font-medium">Copied!</span>
                 )}
@@ -131,17 +130,26 @@ export default function Hero() {
 
             {/* Spotify Link */}
             <div className="text-muted-foreground text-sm sm:text-base">
-              <span>Resume's here. But you can find the unfiltered version of me </span>
+              <span>Resume's </span>
+              <Link
+                href="/documents/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground hover:scale-105 hover:font-semibold transition-all duration-200 cursor-pointer"
+              >
+                here
+              </Link>
+              <span>. But you can find the unfiltered version of me </span>
               <span className="inline-flex items-center">
                 <span>on </span>
                 <a
                   href="https://open.spotify.com/user/31aqr2jxg755zil5kcmw72vqdnda?si=ba02211e78a84c11"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-card border border-dashed faded-border rounded-lg hover:font-semibold transition-all duration-200 ml-1 text-sm font-medium text-foreground"
+                  className="inline-flex items-center gap-1.5 px-2 py-1 bg-card/50 border border-dashed faded-border rounded-md hover:bg-card hover:scale-105 transition-all duration-200 ml-1 text-sm text-foreground"
                   style={{ userSelect: 'none' }}
                 >
-                  <SiSpotify className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                  <SiSpotify className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
                   Spotify
                 </a>
               </span>

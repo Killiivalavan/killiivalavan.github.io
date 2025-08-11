@@ -323,10 +323,13 @@ export default function Projects() {
             <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Build Logs</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
+            {projects.map((project, index) => {
+              const isLeftCol = index % 2 === 0; // md+ breakpoint only
+              const innerBase = "relative flex items-start space-x-5 p-6 rounded-lg transition-all duration-300 group-hover:bg-card/30 group-hover:shadow-lg group-hover:border group-hover:border-border/30";
+              const innerShift = isLeftCol ? "-ml-6" : "md:ml-0 -ml-6"; // keep aligned on mobile; reset on md+ for right column
               return (
-                <div key={project.id} className="rounded-lg p-6 group hover:shadow-lg transition-all duration-300 shadow-sm">
+                <div key={project.id} className="group transition-transform duration-300 ease-out hover:scale-105 transform-gpu overflow-visible">
                   {project.url ? (
                     <a
                       href={project.url}
@@ -334,7 +337,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="block cursor-pointer"
                     >
-                      <div className="flex items-start space-x-5">
+                      <div className={`${innerBase} ${innerShift}`}>
                         {/* Circular Icon or Image */}
                         <div className={`w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-white/5`}>
                           {typeof project.icon === 'string' ? (
@@ -363,7 +366,7 @@ export default function Projects() {
                       </div>
                     </a>
                   ) : (
-                    <div className="flex items-start space-x-5">
+                    <div className={`${innerBase} ${innerShift}`}>
                       {/* Circular Icon or Image */}
                       <div className={`w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-white/5`}>
                         {typeof project.icon === 'string' ? (

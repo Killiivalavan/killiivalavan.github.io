@@ -20,6 +20,7 @@ type ThemeType = 'default' | 'warm-beige';
 export default function FloatingHeader() {
   const [active, setActive] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const [currentTheme, setCurrentTheme] = useState<ThemeType>('warm-beige');
 
   // Theme toggle functionality
@@ -100,47 +101,85 @@ export default function FloatingHeader() {
 
   return (
          <nav
-       className="fixed top-6 left-1/2 z-30 -translate-x-1/2 bg-background/30 backdrop-blur-xl rounded-full shadow-lg border border-border/30 flex items-center px-2 py-1 gap-0 min-w-fit max-w-full"
-       style={{ width: "auto" }}
-     >
+         className="group fixed top-6 left-1/2 z-30 -translate-x-1/2 bg-background/40 backdrop-blur-2xl rounded-full shadow-2xl border border-border/50 flex items-center px-2 py-1 gap-0 min-w-fit max-w-full transition-all duration-300 ease-out hover:py-1 hover:px-3"
+         style={{ width: "auto" }}
+       >
       {/* Desktop Nav */}
-      <div className="hidden sm:flex items-center gap-0">
-        {navItems.map((item, idx) => (
-          <button
-            key={item.id}
-            onClick={(e) => handleNavClick(e, item.href, item.id)}
-            aria-label={item.label}
-            className={`group p-2 mx-0.5 rounded-full transition-colors duration-200 flex items-center justify-center ${
-              active === item.id ? "bg-teal-accent/80 text-background" : "hover:bg-secondary/60 text-muted-foreground"
-            }`}
-          >
-            <item.icon className="w-5 h-5" />
-          </button>
+      <div className="hidden sm:flex items-center gap-0 transition-all duration-300 ease-out group-hover:gap-1.5">
+        {navItems.map((item) => (
+          <div key={item.id} className="relative group">
+            <button
+              onClick={(e) => handleNavClick(e, item.href, item.id)}
+              onMouseEnter={() => setHoveredItem(item.id)}
+              onMouseLeave={() => setHoveredItem(null)}
+              aria-label={item.label}
+              className={`p-2 mx-0.5 rounded-full transition-all duration-300 flex items-center justify-center ${
+                active === item.id ? "bg-teal-accent/80 text-background" : "hover:bg-secondary/60 text-muted-foreground"
+              } ${
+                hoveredItem && hoveredItem !== item.id ? "opacity-40 scale-95" : "opacity-100 scale-100"
+              }`}
+            >
+              <item.icon className="w-5 h-5" />
+            </button>
+            {/* Tooltip */}
+            <span className={`pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-md bg-popover/90 text-foreground text-xs shadow-md transition-opacity duration-200 hidden md:block ${
+              hoveredItem === item.id ? "opacity-100" : "opacity-0"
+            }`}>
+              {item.label}
+            </span>
+          </div>
         ))}
         {/* Separator */}
-        <div className="w-px h-6 bg-border/40 mx-2" />
+        <div className={`w-px h-6 bg-muted-foreground/60 mx-2 transition-all duration-300 group-hover:mx-3 ${
+          hoveredItem ? "opacity-30" : "opacity-60"
+        }`} />
         {externalLinks.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={item.label}
-            className="p-2 mx-0.5 rounded-full hover:bg-secondary/60 text-muted-foreground transition-colors duration-200 flex items-center justify-center"
-          >
-            <item.icon className="w-5 h-5" />
-          </a>
+          <div key={item.href} className="relative group">
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => setHoveredItem(item.href)}
+              onMouseLeave={() => setHoveredItem(null)}
+              aria-label={item.label}
+              className={`p-2 mx-0.5 rounded-full hover:bg-secondary/60 text-muted-foreground transition-all duration-300 flex items-center justify-center ${
+                hoveredItem && hoveredItem !== item.href ? "opacity-40 scale-95" : "opacity-100 scale-100"
+              }`}
+            >
+              <item.icon className="w-5 h-5" />
+            </a>
+            {/* Tooltip */}
+            <span className={`pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-md bg-popover/90 text-foreground text-xs shadow-md transition-opacity duration-200 hidden md:block ${
+              hoveredItem === item.href ? "opacity-100" : "opacity-0"
+            }`}>
+              {item.label}
+            </span>
+          </div>
         ))}
                  {/* Separator */}
-         <div className="w-px h-6 bg-border/40 mx-2" />
-         <button
-           onClick={cycleTheme}
-           className="flex items-center justify-center p-2 mx-0.5 rounded-full hover:bg-secondary/60 transition-colors duration-200 text-muted-foreground hover:text-foreground"
-           aria-label={getTooltipText()}
-           title={getTooltipText()}
-         >
-           <Palette size={20} />
-         </button>
+         <div className={`w-px h-6 bg-muted-foreground/60 mx-2 transition-all duration-300 group-hover:mx-3 ${
+           hoveredItem ? "opacity-30" : "opacity-60"
+         }`} />
+         <div className="relative group">
+           <button
+             onClick={cycleTheme}
+             onMouseEnter={() => setHoveredItem('theme')}
+             onMouseLeave={() => setHoveredItem(null)}
+             className={`flex items-center justify-center p-2 mx-0.5 rounded-full hover:bg-secondary/60 transition-all duration-300 text-muted-foreground hover:text-foreground ${
+               hoveredItem && hoveredItem !== 'theme' ? "opacity-40 scale-95" : "opacity-100 scale-100"
+             }`}
+             aria-label={getTooltipText()}
+             title={getTooltipText()}
+           >
+             <Palette size={20} />
+           </button>
+           {/* Tooltip */}
+           <span className={`pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-md bg-popover/90 text-foreground text-xs shadow-md transition-opacity duration-200 hidden md:block ${
+             hoveredItem === 'theme' ? "opacity-100" : "opacity-0"
+           }`}>
+             Theme
+           </span>
+         </div>
       </div>
       {/* Mobile Hamburger */}
       <div className="sm:hidden flex items-center">
@@ -152,7 +191,7 @@ export default function FloatingHeader() {
           {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
                  {menuOpen && (
-           <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-background/40 backdrop-blur-xl rounded-2xl shadow-lg border border-border/30 flex flex-col items-center py-2 px-3 gap-1 z-40 min-w-[180px]">
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-background/30 backdrop-blur-2xl rounded-2xl shadow-2xl border border-border/50 flex flex-col items-center py-2 px-3 gap-1 z-40 min-w-[180px]">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -165,7 +204,7 @@ export default function FloatingHeader() {
                 <item.icon className="w-5 h-5" />
               </button>
             ))}
-            <div className="w-full h-px bg-border/40 my-1" />
+            <div className="w-full h-px bg-muted-foreground/60 my-1" />
             {externalLinks.map((item) => (
               <a
                 key={item.href}
@@ -178,7 +217,7 @@ export default function FloatingHeader() {
                 <item.icon className="w-5 h-5" />
               </a>
             ))}
-                         <div className="w-full h-px bg-border/40 my-1" />
+                         <div className="w-full h-px bg-muted-foreground/60 my-1" />
              <button
                onClick={cycleTheme}
                className="flex items-center justify-center w-full p-2 my-0.5 rounded-full hover:bg-secondary/60 transition-colors duration-200 text-muted-foreground hover:text-foreground"
