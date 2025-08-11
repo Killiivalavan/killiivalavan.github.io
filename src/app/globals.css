@@ -30,6 +30,10 @@
     --teal-accent: 173 38% 46%;
     --blue-accent: 217 26% 51%;
     --neutral-accent: 100 1% 39%;
+    
+    /* Faded border colors for dark theme */
+    --faded-border: 0 0% 100%;
+    --faded-border-opacity: 0.15;
   }
   
   /* Warm Beige Theme with Violet Accents */
@@ -68,6 +72,10 @@
     --teal-accent: 168 35% 44%;          /* Sage teal */
     --blue-accent: 218 28% 48%;          /* Storm blue */
     --neutral-accent: 38 18% 52%;        /* Warm stone */
+    
+    /* Faded border colors for light theme */
+    --faded-border: 230 15% 10%;
+    --faded-border-opacity: 0.15;
   }
 }
 
@@ -175,6 +183,11 @@
 
   .bg-neutral-accent {
     background-color: hsl(var(--neutral-accent));
+  }
+  
+  /* Faded border styles for skill tiles and buttons */
+  .faded-border {
+    border-color: hsl(var(--faded-border) / var(--faded-border-opacity));
   }
   
   /* Theme toggle button styles */
