@@ -6,7 +6,7 @@ import { Home, BookOpen, Wrench, Github, Twitter, Menu, X, Palette } from "lucid
 
 const navItems = [
   { id: "hero", icon: Home, href: "#hero", label: "Home" },
-  { id: "projects", icon: BookOpen, href: "#projects", label: "My Builds" },
+  { id: "projects", icon: BookOpen, href: "#projects", label: "My Projects" },
 ];
 
 const externalLinks = [
@@ -54,6 +54,50 @@ export default function FloatingHeader() {
     }
   }, [currentTheme]);
 
+  // Enhanced scroll handling with section snapping
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map((item) => document.getElementById(item.id));
+      const scrollY = window.scrollY + 100; // Increased offset for better detection
+      const windowHeight = window.innerHeight;
+      
+      // Remove active class from all sections
+      document.querySelectorAll('.snap-hero, .snap-projects').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionBottom = sectionTop + sectionHeight;
+          
+          // Check if section is in view (with some tolerance for small sections)
+          if (scrollY >= sectionTop - 50 && scrollY < sectionBottom + 50) {
+            setActive(navItems[i].id);
+            
+            // Add active class to current section
+            section.classList.add('active');
+            
+            // Add active class to parent snap section if it exists
+            const snapSection = section.closest('.snap-hero, .snap-projects');
+            if (snapSection) {
+              snapSection.classList.add('active');
+            }
+            break;
+          }
+        }
+      }
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    // Initial call to set active section
+    handleScroll();
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Get the appropriate tooltip text based on current theme
   const getTooltipText = (): string => {
     switch(currentTheme) {
@@ -63,39 +107,26 @@ export default function FloatingHeader() {
     }
   };
 
-  // Smooth scroll and active state
-  useEffect(() => {
-     const handleScroll = () => {
-       const sections = navItems.map((item) => document.getElementById(item.id));
-       const scrollY = window.scrollY + 100; // Increased offset for better detection
-       const windowHeight = window.innerHeight;
-       
-       for (let i = sections.length - 1; i >= 0; i--) {
-         const section = sections[i];
-         if (section) {
-           const sectionTop = section.offsetTop;
-           const sectionHeight = section.offsetHeight;
-           const sectionBottom = sectionTop + sectionHeight;
-           
-           // Check if section is in view (with some tolerance for small sections)
-           if (scrollY >= sectionTop - 50 && scrollY < sectionBottom + 50) {
-             setActive(navItems[i].id);
-             break;
-           }
-         }
-       }
-     };
-     window.addEventListener("scroll", handleScroll);
-     return () => window.removeEventListener("scroll", handleScroll);
-   }, []);
-
   // Smooth scroll on click
   const handleNavClick = (e: React.MouseEvent, href: string, id: string) => {
     e.preventDefault();
     setMenuOpen(false);
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Use scrollIntoView with smooth behavior and ensure proper snapping
+      section.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start",
+        inline: "nearest"
+      });
+      
+      // Additional scroll adjustment for better snapping
+      setTimeout(() => {
+        window.scrollTo({
+          top: section.offsetTop,
+          behavior: 'smooth'
+        });
+      }, 150);
     }
   };
 

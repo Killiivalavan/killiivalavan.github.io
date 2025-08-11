@@ -36,7 +36,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="py-4 mt-20 border-t border-border/20">
+    <footer className="py-4 mt-8 border-t border-border/20">
       <div className="container-custom">
         <div className="flex justify-center">
           <button

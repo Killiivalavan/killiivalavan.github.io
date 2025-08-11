@@ -308,19 +308,12 @@ export default function Projects() {
   };
 
   return (
-    <section className="section pb-4" id="projects">
+    <section id="projects" className="py-8 bg-background snap-projects min-h-screen">
       <div className="container-custom">
-        {/* Main "My Builds" Heading */}
-        <div className="mb-12">
-          <h2 className="section-title text-2xl sm:text-3xl lg:text-4xl font-bold text-left">
-            My Builds
-          </h2>
-        </div>
-
-        {/* Build Logs Subsection */}
+        {/* Projects Subsection */}
         <div className="mb-16">
           <div className="mb-8">
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Build Logs</h3>
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Projects</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
@@ -399,10 +392,10 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Build Kit Subsection */}
-        <div className="mb-16">
+        {/* Tech Stack Subsection - Part of the same section */}
+        <div className="mb-8">
           <div className="mb-8">
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Build Kit</h3>
+            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Tech Stack</h3>
           </div>
 
           {/* Skills Grid */}
@@ -441,7 +434,7 @@ export default function Projects() {
           </div>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-6">
           <Separator />
         </div>
       </div>
