@@ -321,7 +321,6 @@ export default function Projects() {
         <div className="mb-16">
           <div className="mb-8">
             <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Build Logs</h3>
-            <p className="text-muted-foreground">Projects I've built and shipped</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -401,7 +400,6 @@ export default function Projects() {
         <div className="mb-16">
           <div className="mb-8">
             <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Build Kit</h3>
-            <p className="text-muted-foreground">Technologies I use to bring ideas to life</p>
           </div>
 
           {/* Skills Grid */}

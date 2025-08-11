@@ -61,7 +61,7 @@ export default function Hero() {
             {/* Greeting and Introduction */}
             <div className="space-y-3">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi, I'm <span className="text-red-accent">Killie</span>
+                Hi, I'm <span className="text-red-accent">Killiivalavan</span>
               </h1>
               <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed">
                 A developer who builds things like it's a hobby, a habit, and occasionally, a cry for help...
