@@ -86,7 +86,6 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
   }
 
   body {
@@ -97,53 +96,9 @@
     /* No need for hardcoded colors - the theme CSS variables handle this */
   }
 
-  /* Section snapping styles */
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
 
-  /* Hero section - snaps to viewport */
-  .snap-hero {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
 
-  /* Projects+Tech Stack section - snaps to viewport but allows internal scrolling */
-  .snap-projects {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
 
-  /* Ensure proper section heights for snapping */
-  .snap-section:not(:first-child) {
-    min-height: 100vh;
-  }
-
-  /* Smooth transitions for section content */
-  .snap-section > * {
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  }
-
-  /* Visual feedback for active section */
-  .snap-section.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .snap-section:not(.active) {
-    opacity: 0.95;
-    transform: translateY(10px);
-  }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;

@@ -62,7 +62,7 @@ export default function FloatingHeader() {
       const windowHeight = window.innerHeight;
       
       // Remove active class from all sections
-      document.querySelectorAll('.snap-hero, .snap-projects').forEach(section => {
+      document.querySelectorAll('section').forEach(section => {
         section.classList.remove('active');
       });
       
@@ -80,22 +80,31 @@ export default function FloatingHeader() {
             // Add active class to current section
             section.classList.add('active');
             
-            // Add active class to parent snap section if it exists
-            const snapSection = section.closest('.snap-hero, .snap-projects');
-            if (snapSection) {
-              snapSection.classList.add('active');
-            }
+            // Add active class to current section
+            section.classList.add('active');
             break;
           }
         }
       }
     };
     
-    window.addEventListener("scroll", handleScroll);
+    // Throttle scroll events to improve performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
     // Initial call to set active section
     handleScroll();
     
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", throttledHandleScroll);
   }, []);
 
   // Get the appropriate tooltip text based on current theme
@@ -113,20 +122,11 @@ export default function FloatingHeader() {
     setMenuOpen(false);
     const section = document.getElementById(id);
     if (section) {
-      // Use scrollIntoView with smooth behavior and ensure proper snapping
       section.scrollIntoView({ 
         behavior: "smooth", 
         block: "start",
         inline: "nearest"
       });
-      
-      // Additional scroll adjustment for better snapping
-      setTimeout(() => {
-        window.scrollTo({
-          top: section.offsetTop,
-          behavior: 'smooth'
-        });
-      }, 150);
     }
   };
 

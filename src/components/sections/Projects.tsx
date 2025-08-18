@@ -308,10 +308,10 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-8 bg-background snap-projects min-h-screen">
+    <section id="projects" className="py-8 bg-background">
       <div className="container-custom">
         {/* Projects Subsection */}
-        <div className="mb-16">
+        <div className="mb-16 projects-content">
           <div className="mb-8">
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Projects</h2>
           </div>
@@ -346,11 +346,11 @@ export default function Projects() {
                         </div>
                         {/* Project Content */}
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-0">
+                          <div className="flex items-baseline gap-2 mb-0">
                             <h3 className="text-xl font-semibold text-foreground group-hover:text-teal-accent transition-colors">
                               {project.title}
                             </h3>
-                            <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-teal-accent transition-colors" />
+                            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-teal-accent transition-colors flex-shrink-0" />
                           </div>
                           <p className="text-base text-muted-foreground leading-relaxed">
                             {project.description}
@@ -373,13 +373,13 @@ export default function Projects() {
                           <project.icon className="w-7 h-7" />
                         )}
                       </div>
-                      {/* Project Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0">
-                          <h3 className="text-xl font-semibold text-foreground group-hover:text-teal-accent transition-colors">
-                            {project.title}
-                          </h3>
-                        </div>
+                                              {/* Project Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline gap-2 mb-0">
+                            <h3 className="text-xl font-semibold text-foreground group-hover:text-teal-accent transition-colors">
+                              {project.title}
+                            </h3>
+                          </div>
                         <p className="text-base text-muted-foreground leading-relaxed">
                           {project.description}
                         </p>
@@ -393,7 +393,7 @@ export default function Projects() {
         </div>
 
         {/* Tech Stack Subsection - Part of the same section */}
-        <div className="mb-8">
+        <div className="mb-8 tech-stack-content">
           <div className="mb-8">
             <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Tech Stack</h3>
           </div>

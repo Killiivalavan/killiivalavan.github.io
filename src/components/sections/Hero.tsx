@@ -36,7 +36,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="min-h-screen flex flex-col justify-center py-12 lg:py-16 snap-hero" id="hero">
+    <section className="min-h-screen flex flex-col justify-center py-12 lg:py-16" id="hero">
       <div className="container-custom flex-1 flex flex-col justify-center">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
           {/* Left Section - Profile Photo with Footer Info */}
