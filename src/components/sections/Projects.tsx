@@ -319,7 +319,7 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
             {projects.map((project, index) => {
               const isLeftCol = index % 2 === 0; // md+ breakpoint only
-              const innerBase = "relative flex items-start space-x-5 p-6 rounded-lg transition-all duration-300 group-hover:bg-card/30 group-hover:shadow-lg group-hover:border group-hover:border-border/30";
+              const innerBase = "project-hoverable relative flex items-start space-x-5 p-6 rounded-lg transition-all duration-300 group-hover:bg-card/30 group-hover:shadow-lg group-hover:border group-hover:border-border/30";
               const innerShift = isLeftCol ? "-ml-6" : "md:ml-0 -ml-6"; // keep aligned on mobile; reset on md+ for right column
               return (
                 <div key={project.id} className="group transition-transform duration-300 ease-out hover:scale-105 transform-gpu overflow-visible">

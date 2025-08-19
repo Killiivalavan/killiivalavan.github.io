@@ -34,48 +34,58 @@
     /* Faded border colors for dark theme */
     --faded-border: 0 0% 100%;
     --faded-border-opacity: 0.15;
+
+    /* Project card hover fallback (default/dark) */
+    --project-card-hover-hex: #272b2a; /* overridden by themes */
   }
   
-  /* Warm Beige Theme with Violet Accents */
-  .theme-warm-beige {
-    --background: 34 57% 93%;            /* Refined warm beige (foundation) */
-    --foreground: 230 15% 10%;           /* Charcoal ink (for personality-rich text) */
+  
 
-    --card: 34 57% 98%;                  /* Slightly lighter than background */
-    --card-foreground: 230 15% 10%;
+  /* Sand + Blue Theme (new palette) */
+  .theme-sand {
+    /* Base palette */
+    --background: 42 29% 87%;           /* #e7e1d3 */
+    --foreground: 221 26% 14%;          /* #1a202c */
 
-    --popover: 34 57% 95%;
-    --popover-foreground: 230 15% 10%;
+    --card: 42 29% 94%;                 /* slightly lighter than bg */
+    --card-foreground: 221 26% 14%;
 
-    --primary: 210 25% 36%;              /* Bold desaturated navy (focus color) */
-    --primary-foreground: 34 57% 98%;    /* Light text on primary */
+    --popover: 42 29% 92%;
+    --popover-foreground: 221 26% 14%;
 
-    --secondary: 36 20% 85%;             /* Sandstone gray */
-    --secondary-foreground: 230 15% 10%;
+    --primary: 221 26% 14%;             /* use text color as primary ink */
+    --primary-foreground: 42 29% 96%;
 
-    --muted: 36 15% 88%;                 /* Soft neutral background block */
-    --muted-foreground: 230 10% 45%;     /* Stone text */
+    --secondary: 42 20% 82%;            /* muted sand */
+    --secondary-foreground: 221 26% 14%;
 
-    --accent: 270 34% 54%;               /* Earthy violet-grey (expressive but subtle) */
-    --accent-foreground: 34 57% 98%;
+    --muted: 42 18% 88%;
+    --muted-foreground: 221 12% 35%;
 
-    --destructive: 4 60% 48%;            /* Warm muted red (assertive, not harsh) */
-    --destructive-foreground: 34 57% 98%;
+    /* Replace greenish accent with slate blue */
+    --accent: 211 37% 49%;              /* slate blue for emphasis */
+    --accent-foreground: 42 29% 96%;
 
-    --border: 34 25% 80%;
-    --input: 34 25% 90%;
-    --ring: 270 34% 54%;
+    --destructive: 4 60% 42%;
+    --destructive-foreground: 42 29% 96%;
+
+    --border: 42 20% 78%;
+    --input: 42 20% 86%;
+    --ring: 211 37% 49%;
     --radius: 0.5rem;
 
-    /* Optional expressive accents */
-    --red-accent: 2 64% 42%;             /* Deep terracotta */
-    --teal-accent: 168 35% 44%;          /* Sage teal */
-    --blue-accent: 218 28% 48%;          /* Storm blue */
-    --neutral-accent: 38 18% 52%;        /* Warm stone */
-    
-    /* Faded border colors for light theme */
-    --faded-border: 230 15% 10%;
+    /* Accent overrides used across components */
+    --teal-accent: 211 37% 49%;         /* header active pill & misc */
+    --blue-accent: 208 96% 74%;         /* light azure for hovers */
+    --red-accent: 19 56% 41%;           /* warm sienna for name */
+    --neutral-accent: 38 18% 52%;       /* warm stone */
+
+    /* Borders for light theme */
+    --faded-border: 221 26% 14%;
     --faded-border-opacity: 0.15;
+
+    /* Project card hover color (updated as requested) */
+    --project-card-hover-hex: #cbe4f3;
   }
 }
 
@@ -92,9 +102,7 @@
     @apply bg-background text-foreground;
   }
 
-  body.theme-warm-beige {
-    /* No need for hardcoded colors - the theme CSS variables handle this */
-  }
+  
 
 
 
@@ -144,6 +152,20 @@
 
   .nav-pill-active {
     @apply bg-secondary;
+  }
+
+  /* Project card hover color for the Sand theme */
+  body.theme-sand .group:hover .project-hoverable {
+    background-color: var(--project-card-hover-hex) !important;
+  }
+
+  body.theme-sand .project-hoverable {
+    transition: background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  /* Default (dark) theme project card hover */
+  body:not(.theme-sand) .group:hover .project-hoverable {
+    background-color: var(--project-card-hover-hex) !important;
   }
 
   .section-title {

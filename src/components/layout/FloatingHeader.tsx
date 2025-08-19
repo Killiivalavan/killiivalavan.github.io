@@ -15,17 +15,17 @@ const externalLinks = [
 ];
 
 // Define theme types
-type ThemeType = 'default' | 'warm-beige';
+type ThemeType = 'default' | 'sand';
 
 export default function FloatingHeader() {
   const [active, setActive] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-    const [currentTheme, setCurrentTheme] = useState<ThemeType>('warm-beige');
+    const [currentTheme, setCurrentTheme] = useState<ThemeType>('sand');
 
   // Theme toggle functionality
   const cycleTheme = () => {
-    const themeSequence: ThemeType[] = ['default', 'warm-beige'];
+    const themeSequence: ThemeType[] = ['sand', 'default'];
     const currentIndex = themeSequence.indexOf(currentTheme);
     const nextIndex = (currentIndex + 1) % themeSequence.length;
     const nextTheme = themeSequence[nextIndex];
@@ -37,20 +37,20 @@ export default function FloatingHeader() {
   // Initialize theme from localStorage on component mount
   useEffect(() => {
     const savedTheme = localStorage.getItem('portfolio-theme') as ThemeType | null;
-    if (savedTheme && ['default', 'warm-beige'].includes(savedTheme)) {
+    if (savedTheme && ['default', 'sand'].includes(savedTheme)) {
       setCurrentTheme(savedTheme);
     } else {
-      setCurrentTheme('warm-beige');
-      localStorage.setItem('portfolio-theme', 'warm-beige');
+      setCurrentTheme('sand');
+      localStorage.setItem('portfolio-theme', 'sand');
     }
   }, []);
 
   // Update body class when theme changes
   useEffect(() => {
-    document.body.classList.remove('theme-warm-beige');
+    document.body.classList.remove('theme-sand');
     
-    if (currentTheme === 'warm-beige') {
-      document.body.classList.add('theme-warm-beige');
+    if (currentTheme === 'sand') {
+      document.body.classList.add('theme-sand');
     }
   }, [currentTheme]);
 
@@ -110,8 +110,8 @@ export default function FloatingHeader() {
   // Get the appropriate tooltip text based on current theme
   const getTooltipText = (): string => {
     switch(currentTheme) {
-      case 'default': return 'Switch to warm beige theme';
-      case 'warm-beige': return 'Switch to default theme';
+      case 'sand': return 'Switch theme (default)';
+      case 'default': return 'Switch theme (sand)';
       default: return 'Toggle theme';
     }
   };
