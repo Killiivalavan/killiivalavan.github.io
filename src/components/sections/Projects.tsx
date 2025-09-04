@@ -72,7 +72,7 @@ const projects: Project[] = [
   {
     id: 5,
     title: "TaleForge",
-    description: "Interactive fiction powered by AI - your decisions write the plot.",
+    description: "A story generator that lets user navigate the story by making choices.",
     imageUrl: "/images/projects/exp-tracker.png",
     url: "https://github.com/Killiivalavan/TaleForge",
     icon: "/images/projects/TaleForge-logo.png",

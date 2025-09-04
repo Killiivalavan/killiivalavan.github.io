@@ -122,7 +122,7 @@ export default function Hero() {
             {/* About/Philosophy Section with Bullet Points */}
             <div className="space-y-2 text-muted-foreground text-sm sm:text-base leading-relaxed">
               <p><span className="text-muted-foreground">-</span> I develop websites, apps and occasionally i make music too.</p>
-              <p><span className="text-muted-foreground">-</span> All my projects start with a half-joke, a weird itch, or a late-night 'what if?'.</p>
+              <p><span className="text-muted-foreground">-</span> Currently exploring ambitious projects and new tech stacks.</p>
               <p><span className="text-muted-foreground">-</span> Most things I make are either useful, fun, or both.</p>
               <p><span className="text-muted-foreground">-</span> I like fast builds, sharp code, and ideas that stick.</p>
               <p><span className="text-muted-foreground">-</span> Building what I want to see exist — for now, that's the job.</p>
