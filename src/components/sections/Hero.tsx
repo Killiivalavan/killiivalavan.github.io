@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { Github, Twitter, Linkedin, FileDown } from "lucide-react";
+import { Github, Twitter, Linkedin, FileDown, ExternalLink } from "lucide-react";
 import { SiSpotify } from "react-icons/si";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -158,9 +158,27 @@ export default function Hero() {
             {/* Under Development Section */}
             <div className="space-y-2">
               <h3 className="text-lg sm:text-xl font-semibold">Under Development</h3>
-              <p className="text-muted-foreground text-sm sm:text-base">
-                A music-focused take on Letterboxd, built around community and not just catalogs.
-              </p>
+              {/* Cards - mirroring Projects section style */}
+              <div className="grid grid-cols-1 gap-y-3 pt-1">
+                <div className="group transition-transform duration-300 ease-out hover:scale-[1.02] transform-gpu overflow-visible">
+                  <a href="https://github.com/Killiivalavan/Snapdesk" target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
+                    <div className={"project-hoverable relative flex items-start p-4 pl-6 -ml-6 rounded-lg transition-all duration-300 group-hover:bg-card/30 group-hover:shadow-lg group-hover:border group-hover:border-border/30"}>
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline gap-2 mb-0">
+                          <h4 className="text-base sm:text-lg font-semibold text-foreground group-hover:text-teal-accent transition-colors">
+                            SnapDesk
+                          </h4>
+                          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-teal-accent transition-colors flex-shrink-0" />
+                        </div>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        An open-source desktop layout manager for windows
+                      </p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
