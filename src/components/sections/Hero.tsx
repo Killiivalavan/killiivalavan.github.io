@@ -64,7 +64,7 @@ export default function Hero() {
                 Hi, I'm <span className="text-red-accent">Killiivalavan</span>
               </h1>
               <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                A developer who builds things like it's a hobby, a habit, and occasionally, a cry for help...
+                A developer who builds things like it's a hobby, a habit, a cry for help...
               </p>
             </div>
 
