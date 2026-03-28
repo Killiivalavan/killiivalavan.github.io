@@ -1,10 +1,10 @@
 import PageWrapper from "@/components/layout/PageWrapper";
-import BioSection from "@/components/sections/BioSection";
+import Projects from "@/components/sections/Projects";
 
-export default function Home() {
+export default function ProjectsPage() {
   return (
     <PageWrapper>
-      <BioSection />
+      <Projects />
     </PageWrapper>
   );
 }

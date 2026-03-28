@@ -2,129 +2,89 @@
 
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { ExternalLink, BookOpen, Code, Brain, FileText, Calculator, Sparkles } from "lucide-react";
-import {
-  SiPython,
-  SiPytorch,
-  SiFastapi,
-  SiHuggingface,
-  SiDjango,
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiExpress,
-  SiTailwindcss,
-  SiShadcnui,
-  SiPostgresql,
-  SiMongodb,
-  SiMysql,
-  SiSupabase,
-  SiRedis,
-  SiDocker,
-  SiOllama,
-} from 'react-icons/si';
+import { ExternalLink } from "lucide-react";
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import { projects } from "@/data/projects";
+import { skills } from "@/data/skills";
+import type { Project } from "@/data/projects";
+import type { Skill } from "@/data/skills";
 
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-  url?: string;
-  icon: React.ComponentType<{ className?: string }> | string;
-};
+// ── SkillIcon Helper Component ──────────────────────────────────────────────
+function SkillIcon({ skill, className }: { skill: Skill; className?: string }) {
+  if (skill.devicon) {
+    return <i className={`devicon-${skill.devicon} colored ${className}`} />;
+  }
+  if (skill.icon) {
+    const IconComponent = skill.icon;
+    return <IconComponent className={`${className} ${skill.iconColor}`} />;
+  }
+  return null;
+}
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "the B-side",
-    description: "A social network to log, rate, and review music",
-    imageUrl: "/images/projects/thebside-logo.png",
-    url: "https://thebside.club/",
-    icon: "/images/projects/thebside-logo.png",
-  },
-  {
-    id: 2,
-    title: "tabstone",
-    description: "An extension that lets archive tabs and kill tab clutter",
-    imageUrl: "/images/projects/code-iterator-ai.png",
-    url: "https://tabstone.vercel.app/",
-    icon: "/images/projects/tabstone-logo.png",
-  },
-  {
-    id: 3,
-    title: "D.A.I.S.Y",
-    description: "An AI centric voice assitant inspired by JARVIS",
-    imageUrl: "/images/projects/DAISY.png",
-    url: "https://github.com/Killiivalavan/DAISY",
-    icon: "/images/projects/DAISY-logo.png",
-  },
-  {
-    id: 4,
-    title: "Simple-it",
-    description: "An AI based tool to get summaries from PDF and audio files",
-    imageUrl: "/images/projects/conspiracy-ai.png",
-    url: "https://github.com/Killiivalavan/Simple-it",
-    icon: "/images/projects/Simpleit-logo.png",
-  },
-  {
-    id: 5,
-    title: "Illuminaughty",
-    description: "A creative AI tool for generating fictional, prompt-based conspiracy narratives",
-    imageUrl: "https://placehold.co/600x400/48a398/dbdbda",
-    url: "https://github.com/Killiivalavan/Illuminaughty",
-    icon: "/images/projects/Paranoianet-logo.png",
-  },
-  {
-    id: 6,
-    title: "What-if",
-    description: "A story generator that lets user navigate the story by making choices.",
-    imageUrl: "/images/projects/TaleForge-logo.png",
-    url: "https://github.com/Killiivalavan/What-if",
-    icon: "/images/projects/TaleForge-logo.png",
-  },
+// ── ProjectCard: extracted to eliminate duplicated JSX ──────────────────────
+function ProjectCard({ project }: { project: Project }) {
+  const inner = (
+    <article className="flex flex-col h-full bg-card rounded-2xl overflow-hidden border border-border/40 hover:shadow-xl hover:shadow-black/20 hover:border-border/80 transition-[box-shadow,border-color] duration-300 ease-out transform-gpu">
+      <div className="gg-c-cards__image-container p-4 pb-0 overflow-hidden transform-gpu">
+        <div
+          className="gg-c-cards__image w-full aspect-[4/3] rounded-xl border border-border/10 bg-muted/10 relative overflow-hidden transition-transform duration-500 ease-out group-hover:scale-110 will-change-transform"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+        >
+          <Image
+            src={project.imageUrl}
+            alt={project.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+          <div className="absolute inset-0 bg-transparent mix-blend-multiply opacity-0 group-hover:opacity-20 transition-opacity" />
+        </div>
+      </div>
+      <div className="gg-c-cards__body flex flex-col flex-1 p-6 pb-2">
+        <h2 className="gg-c-cards__title text-xl font-bold text-foreground mb-3 group-hover:text-teal-accent transition-colors">
+          {project.title}
+        </h2>
+        <p className="text-[15px] text-muted-foreground leading-relaxed">
+          {project.description}
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-2 px-6 pt-4 pb-6 mt-auto overflow-hidden">
+        {project.techStack.map((techName) => {
+          const skill = skills.find((s) => s.name === techName);
+          if (!skill) return null;
+          return (
+            <div
+              key={techName}
+              className="flex items-center gap-2 px-3 py-1.5 bg-card/50 border border-dashed faded-border rounded-lg select-none pointer-events-none"
+            >
+              <SkillIcon skill={skill} className="w-4 h-4 flex items-center justify-center text-base" />
+              <span className="text-[12px] font-medium text-foreground">
+                {skill.name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </article>
+  );
 
-];
+  return (
+    <li className="gg-c-cards__item h-full">
+      {project.url ? (
+        <a href={project.url} target="_blank" rel="noopener noreferrer" className="gg-c-cards__card group block h-full outline-none">
+          {inner}
+        </a>
+      ) : (
+        <div className="gg-c-cards__card group block h-full outline-none">
+          {inner}
+        </div>
+      )}
+    </li>
+  );
+}
 
-// Skills data
-type Skill = {
-  name: string;
-  icon: React.ComponentType<{ className?: string }>;
-  iconColor: string;
-};
-
-const skills: Skill[] = [
-  // Row 1
-  { name: "Python", icon: SiPython, iconColor: "text-blue-500" },
-  { name: "PyTorch", icon: SiPytorch, iconColor: "text-orange-500" },
-  { name: "FastAPI", icon: SiFastapi, iconColor: "text-green-500" },
-  { name: "Huggingface", icon: SiHuggingface, iconColor: "text-yellow-500" },
-  { name: "Django", icon: SiDjango, iconColor: "text-green-600" },
-  
-  // Row 2
-  { name: "JavaScript", icon: SiJavascript, iconColor: "text-yellow-500" },
-  { name: "TypeScript", icon: SiTypescript, iconColor: "text-blue-600" },
-  { name: "React", icon: SiReact, iconColor: "text-blue-500" },
-  { name: "Next.js", icon: SiNextdotjs, iconColor: "text-black dark:text-white" },
-  { name: "Node.js", icon: SiNodedotjs, iconColor: "text-green-600" },
-  
-  // Row 3
-  { name: "Express.js", icon: SiExpress, iconColor: "text-black dark:text-white" },
-  { name: "Tailwind CSS", icon: SiTailwindcss, iconColor: "text-blue-500" },
-  { name: "Shadcn UI", icon: SiShadcnui, iconColor: "text-black dark:text-white" },
-  { name: "PostgreSQL", icon: SiPostgresql, iconColor: "text-blue-600" },
-  { name: "MongoDB", icon: SiMongodb, iconColor: "text-green-500" },
-  
-  // Row 4
-  { name: "MySQL", icon: SiMysql, iconColor: "text-blue-500" },
-  { name: "Supabase", icon: SiSupabase, iconColor: "text-green-500" },
-  { name: "Redis", icon: SiRedis, iconColor: "text-red-500" },
-  { name: "Docker", icon: SiDocker, iconColor: "text-blue-500" },
-  { name: "Ollama", icon: SiOllama, iconColor: "text-purple-500" },
-];
-
+// ─────────────────────────────────────────────────────────────────────────────
 export default function Projects() {
   const skillRefs = useRef<(HTMLDivElement | null)[]>([]);
   const activeIndexRef = useRef<number | null>(null);
@@ -262,7 +222,7 @@ export default function Projects() {
     } catch {}
     
     activeIndexRef.current = null;
-
+    
     // Remove pressed state styling and spring back to original position
     if (element) {
       element.style.filter = '';
@@ -324,80 +284,11 @@ export default function Projects() {
             <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Projects</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
-            {projects.map((project, index) => {
-              const isLeftCol = index % 2 === 0; // md+ breakpoint only
-              const innerBase = "project-hoverable relative flex items-start space-x-5 p-6 rounded-lg transition-all duration-300 group-hover:bg-card/30 group-hover:shadow-lg group-hover:border group-hover:border-border/30";
-              const innerShift = isLeftCol ? "-ml-6" : "md:ml-0 -ml-6"; // keep aligned on mobile; reset on md+ for right column
-              return (
-                <div key={project.id} className="group transition-transform duration-300 ease-out hover:scale-105 transform-gpu overflow-visible">
-                  {project.url ? (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block cursor-pointer"
-                    >
-                      <div className={`${innerBase} ${innerShift}`}>
-                        {/* Circular Icon or Image */}
-                        <div className={`w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-white/5`}>
-                          {typeof project.icon === 'string' ? (
-                            <img
-                              src={project.icon}
-                              alt={`${project.title} logo`}
-                              className="w-20 h-20 object-contain rounded-full"
-                              style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.10))' }}
-                            />
-                          ) : (
-                            <project.icon className="w-7 h-7" />
-                          )}
-                        </div>
-                        {/* Project Content */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline gap-2 mb-0">
-                            <h3 className="text-xl font-semibold text-foreground group-hover:text-teal-accent transition-colors">
-                              {project.title}
-                            </h3>
-                            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-teal-accent transition-colors flex-shrink-0" />
-                          </div>
-                          <p className="text-base text-muted-foreground leading-relaxed">
-                            {project.description}
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  ) : (
-                    <div className={`${innerBase} ${innerShift}`}>
-                      {/* Circular Icon or Image */}
-                      <div className={`w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-white/5`}>
-                        {typeof project.icon === 'string' ? (
-                          <img
-                            src={project.icon}
-                            alt={`${project.title} logo`}
-                            className="w-20 h-20 object-contain rounded-full"
-                            style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.10))' }}
-                          />
-                        ) : (
-                          <project.icon className="w-7 h-7" />
-                        )}
-                      </div>
-                                              {/* Project Content */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline gap-2 mb-0">
-                            <h3 className="text-xl font-semibold text-foreground group-hover:text-teal-accent transition-colors">
-                              {project.title}
-                            </h3>
-                          </div>
-                        <p className="text-base text-muted-foreground leading-relaxed">
-                          {project.description}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </ul>
         </div>
 
         {/* Tech Stack Subsection - Part of the same section */}
@@ -409,7 +300,6 @@ export default function Projects() {
           {/* Skills Grid */}
           <div className="flex flex-wrap gap-3">
             {skills.map((skill, index) => {
-              const IconComponent = skill.icon;
               return (
                 <div
                   key={index}
@@ -432,7 +322,7 @@ export default function Projects() {
                     perspective: '1000px'
                   }}
                 >
-                  <IconComponent className={`w-4 h-4 ${skill.iconColor}`} />
+                  <SkillIcon skill={skill} className="w-4 h-4 flex items-center justify-center text-lg" />
                   <span className="text-sm font-medium text-foreground group-hover:text-teal-accent transition-colors">
                     {skill.name}
                   </span>

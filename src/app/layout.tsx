@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
+// Node.js 22/25+ creates a global localStorage but limits access if missing the --localstorage-file flag.
+// Deleting it inside the Next.js process disables this broken behavior and allows SSR packages to fallback gracefully.
+if (typeof globalThis !== "undefined" && globalThis.localStorage) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (globalThis as any).localStorage;
+  } catch (e) {
+    // Ignore if un-deletable
+  }
+}
+
+import { Outfit } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  weight: ['300', '400', '700', '900'],
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "Killiivalavan",
-  description: "Personal portfolio website showcasing projects, skills, and experience",
+  description: "Personal portfolio website.",
   icons: {
     icon: [
       {
@@ -45,8 +53,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning className="antialiased font-sans">
+    <html lang="en" className={`${outfit.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+      </head>
+      <body suppressHydrationWarning className={`${outfit.className} antialiased`}>
         {children}
       </body>
     </html>

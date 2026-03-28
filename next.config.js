@@ -1,38 +1,27 @@
 /** @type {import('next').NextConfig} */
+
+// Polyfill for Node.js 22/25+ experimental webstorage
+if (
+  typeof globalThis !== 'undefined' &&
+  globalThis.localStorage &&
+  !globalThis.localStorage.getItem
+) {
+  globalThis.localStorage.getItem = () => null;
+  globalThis.localStorage.setItem = () => {};
+  globalThis.localStorage.removeItem = () => {};
+}
+
 const nextConfig = {
   output: 'export',
   distDir: 'out',
   trailingSlash: true,
   images: {
-    unoptimized: true,
-    domains: [
-      "source.unsplash.com",
-      "images.unsplash.com",
-      "ext.same-assets.com",
-      "ugc.same-assets.com",
-    ],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "source.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "ext.same-assets.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "ugc.same-assets.com",
-        pathname: "/**",
-      },
-    ],
+    // Custom loader for static export — passes through the src as-is.
+    // This allows using Next.js <Image> component (lazy loading, priority hints, sizes)
+    // without requiring a server-side image optimization endpoint.
+    // To add real optimization later, swap this loader for a CDN-based one.
+    loader: 'custom',
+    loaderFile: './src/lib/imageLoader.js',
   },
 };
 
