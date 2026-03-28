@@ -11,11 +11,10 @@ export default function PageWrapper({ children, scrollable = false }: { children
       <div className={`w-full max-w-[1016px] flex flex-col px-6 sm:px-12 lg:px-0 ${
         scrollable ? '' : 'h-full'
       }`}>
-        {/* Navbar */}
         <header className="w-full shrink-0 py-6">
-          <div className="w-full flex justify-between items-center">
+          <div className="w-full flex flex-col sm:flex-row justify-between sm:items-center gap-4">
             <Link href="/" className="font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">Killiivalavan</Link>
-            <nav className="hidden sm:flex gap-8 text-[15px] font-medium items-center text-muted-foreground">
+            <nav className="flex flex-wrap gap-4 sm:gap-8 text-[14px] sm:text-[15px] font-medium items-center text-muted-foreground">
               <Link href="/projects" className="hover:text-foreground transition-colors">Projects</Link>
               <Link href="/bucket-list" className="hover:text-foreground transition-colors">Bucket List</Link>
               <Link href="/mindscape" className="hover:text-foreground transition-colors">Mindscape</Link>

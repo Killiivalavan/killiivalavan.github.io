@@ -22,7 +22,31 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "Killiivalavan",
-  description: "Personal portfolio website.",
+  description: "Developer, Producer, and Thinker. Tinkering with code and music.",
+  metadataBase: new URL('https://killiivalavan.github.io'),
+  openGraph: {
+    title: "Killiivalavan",
+    description: "Developer, Producer, and Thinker. Exploring the intersection of tech and art.",
+    url: 'https://killiivalavan.github.io',
+    siteName: 'Killiivalavan Portfolio',
+    images: [
+      {
+        url: '/images/profile.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Killiivalavan Portfolio Preview',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Killiivalavan",
+    description: "Portfolio",
+    creator: '@killiivalavan',
+    images: ['/images/profile.webp'],
+  },
   icons: {
     icon: [
       {
