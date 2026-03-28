@@ -31,7 +31,7 @@ export default function MindscapeSection() {
 
       {/* Title overlay */}
       <div className="absolute bottom-8 left-8 z-20 pointer-events-none">
-        <h1 className="text-4xl sm:text-5xl font-serif tracking-tight text-foreground/80 mb-1">
+        <h1 className="font-chillax text-4xl text-foreground/90 tracking-tight mb-1">
           Mindscape
         </h1>
         <p className="text-[13px] text-muted-foreground/60 max-w-[350px]">

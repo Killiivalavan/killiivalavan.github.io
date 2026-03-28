@@ -23,7 +23,7 @@ export default function BioSection() {
       
       {/* Right Column: Info */}
       <div className="flex flex-col flex-1 max-w-[500px] pt-4 lg:pt-0">
-         <h1 className="text-5xl lg:text-5xl font-bold tracking-tight mb-8">
+         <h1 className="font-chillax text-4xl text-foreground/90 tracking-tight mb-8">
            {homeData.greeting}
          </h1>
          

@@ -1,9 +1,22 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import TimeDisplay from './TimeDisplay';
 
-// PageWrapper is now a React Server Component.
-// Only the TimeDisplay child is client-side, keeping the layout shell fully static.
 export default function PageWrapper({ children, scrollable = false }: { children: React.ReactNode; scrollable?: boolean }) {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+
+  const navLinks = [
+    { href: '/projects', label: 'Projects' },
+    { href: '/bucket-list', label: 'Bucket List' },
+    { href: '/mindscape', label: 'Mindscape' },
+  ].filter(link => {
+    const normalizedPath = pathname?.replace(/\/$/, '') || '/';
+    return link.href !== normalizedPath;
+  });
+
   return (
     <div className={`w-full flex flex-col items-center font-sans bg-background text-foreground ${
         scrollable ? 'min-h-screen' : 'min-h-screen lg:h-screen justify-center overflow-hidden'
@@ -13,11 +26,18 @@ export default function PageWrapper({ children, scrollable = false }: { children
       }`}>
         <header className="w-full shrink-0 py-6">
           <div className="w-full flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-            <Link href="/" className="font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">Killiivalavan</Link>
+            {isHome ? (
+              <Link href="/" className="font-chillax text-2xl tracking-tight hover:opacity-80 transition-opacity">Killiivalavan</Link>
+            ) : (
+              <Link href="/" className="group flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-all duration-200">
+                <span className="font-sans text-lg sm:text-xl transition-transform group-hover:-translate-x-1 mb-0.5">←</span>
+                <span className="font-sans text-[15px] font-medium tracking-tight">Home</span>
+              </Link>
+            )}
             <nav className="flex flex-wrap gap-4 sm:gap-8 text-[14px] sm:text-[15px] font-medium items-center text-muted-foreground">
-              <Link href="/projects" className="hover:text-foreground transition-colors">Projects</Link>
-              <Link href="/bucket-list" className="hover:text-foreground transition-colors">Bucket List</Link>
-              <Link href="/mindscape" className="hover:text-foreground transition-colors">Mindscape</Link>
+              {navLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="hover:text-foreground transition-colors">{link.label}</Link>
+              ))}
             </nav>
           </div>
         </header>
@@ -32,8 +52,8 @@ export default function PageWrapper({ children, scrollable = false }: { children
         </main>
 
         {/* Footer */}
-        <footer className="w-full shrink-0 pb-8">
-          <div className="w-full border-t border-border/40 pt-6">
+        <footer className="w-full shrink-0 pb-4">
+          <div className="w-full border-t border-border/40 pt-2">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center text-[14px] font-medium text-muted-foreground gap-4">
                {/* Left side: Social Links */}
                <div className="flex gap-6">

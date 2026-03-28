@@ -3,7 +3,7 @@ import BucketListSection from "@/components/sections/BucketListSection";
 
 export default function BucketListPage() {
   return (
-    <PageWrapper>
+    <PageWrapper scrollable={false}>
       <BucketListSection />
     </PageWrapper>
   );

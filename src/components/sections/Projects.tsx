@@ -42,6 +42,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
       <div className="gg-c-cards__body flex flex-col flex-1 p-6 pb-2">
+        <span className="font-abril text-[12px] tracking-[0.1em] text-muted-foreground/60 mb-2">Project</span>
         <h2 className="gg-c-cards__title text-xl font-bold text-foreground mb-3 group-hover:text-teal-accent transition-colors">
           {project.title}
         </h2>
@@ -281,7 +282,7 @@ export default function Projects() {
         {/* Projects Subsection */}
         <div className="mb-16 projects-content">
           <div className="mb-8">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Projects</h2>
+            <h2 className="font-chillax text-4xl text-foreground/90 mb-8 tracking-tight">Projects</h2>
           </div>
 
           <ul className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
@@ -294,7 +295,7 @@ export default function Projects() {
         {/* Tech Stack Subsection - Part of the same section */}
         <div className="mb-8 tech-stack-content">
           <div className="mb-8">
-            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 uppercase tracking-wide">Tech Stack</h3>
+            <h3 className="font-chillax text-4xl text-foreground/90 mb-8 tracking-tight">Skills</h3>
           </div>
 
           {/* Skills Grid */}

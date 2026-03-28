@@ -12,12 +12,19 @@ if (typeof globalThis !== "undefined" && globalThis.localStorage) {
 }
 
 import { Outfit } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const outfit = Outfit({
   weight: ['300', '400', '700', '900'],
   variable: "--font-outfit",
   subsets: ["latin"],
+});
+
+const chillax = localFont({
+  src: "../../public/fonts/Chillax-Variable.woff2",
+  variable: "--font-chillax",
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -77,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${outfit.variable} ${chillax.variable}`} suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       </head>

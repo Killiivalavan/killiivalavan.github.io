@@ -3,7 +3,7 @@ import Projects from "@/components/sections/Projects";
 
 export default function ProjectsPage() {
   return (
-    <PageWrapper>
+    <PageWrapper scrollable={true}>
       <Projects />
     </PageWrapper>
   );
