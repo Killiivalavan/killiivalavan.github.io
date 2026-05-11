@@ -71,7 +71,7 @@ function ProjectCard({ project }: { project: Project }) {
   );
 
   return (
-    <li className="gg-c-cards__item h-full">
+    <>
       {project.url ? (
         <a href={project.url} target="_blank" rel="noopener noreferrer" className="gg-c-cards__card group block h-full outline-none">
           {inner}
@@ -81,12 +81,16 @@ function ProjectCard({ project }: { project: Project }) {
           {inner}
         </div>
       )}
-    </li>
+    </>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 export default function Projects() {
+  const scrollContainerRef = useRef<HTMLUListElement>(null);
+  const [isFirstVisible, setIsFirstVisible] = useState(true);
+  const [isLastVisible, setIsLastVisible] = useState(false);
+
   const skillRefs = useRef<(HTMLDivElement | null)[]>([]);
   const activeIndexRef = useRef<number | null>(null);
   const pointerStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -96,12 +100,50 @@ export default function Projects() {
 
   // Cleanup animation frame on unmount
   useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+
+    const handleScroll = () => {
+      if (scrollContainer) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+        setIsFirstVisible(scrollLeft === 0);
+        setIsLastVisible(scrollLeft + clientWidth >= scrollWidth - 5); // 5px tolerance
+      }
+    };
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check
+    }
+
     return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
   }, []);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.offsetWidth;
+      scrollContainerRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.offsetWidth;
+      scrollContainerRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   const applyTransform = (index: number, x: number, y: number, scale: number = 1, rotation: number = 0) => {
     const element = skillRefs.current[index];
@@ -285,11 +327,46 @@ export default function Projects() {
             <h2 className="font-chillax text-4xl text-foreground/90 mb-8 tracking-tight">Projects</h2>
           </div>
 
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </ul>
+          <div className="relative w-full">
+            <ul
+              ref={scrollContainerRef}
+              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide"
+              style={{ scrollPadding: '0 1rem' }}
+            >
+              {projects.map((project) => (
+                <li
+                  key={project.id}
+                  className="flex-shrink-0 w-full md:w-1/3 snap-center px-2 first:pl-0 last:pr-0"
+                >
+                  <ProjectCard project={project} />
+                </li>
+              ))}
+            </ul>
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-4 z-10">
+              {!isFirstVisible && (
+                <button
+                  onClick={scrollLeft}
+                  className="bg-card/50 hover:bg-card/80 backdrop-blur-sm border border-border/20 text-foreground rounded-full p-2 shadow-lg"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+            </div>
+            <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-4 z-10">
+              {!isLastVisible && (
+                <button
+                  onClick={scrollRight}
+                  className="bg-card/50 hover:bg-card/80 backdrop-blur-sm border border-border/20 text-foreground rounded-full p-2 shadow-lg"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Tech Stack Subsection - Part of the same section */}

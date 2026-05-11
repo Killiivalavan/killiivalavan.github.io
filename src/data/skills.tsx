@@ -1,7 +1,7 @@
-import { 
+import {
   SiPython, SiPytorch, SiFastapi, SiHuggingface, SiDjango,
-  SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiNodedotjs, 
-  SiExpress, SiTailwindcss, SiShadcnui, SiPostgresql, SiMongodb, 
+  SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiNodedotjs,
+  SiExpress, SiTailwindcss, SiShadcnui, SiPostgresql, SiMongodb,
   SiMysql, SiSupabase, SiRedis, SiDocker, SiOllama, SiVite
 } from 'react-icons/si';
 
@@ -10,7 +10,7 @@ import { ElementType } from 'react';
 export type Skill = {
   name: string;
   devicon?: string;
-  icon?: ElementType; 
+  icon?: ElementType;
   iconColor?: string;
 };
 
@@ -27,6 +27,7 @@ export const skills: Skill[] = [
   { name: "Node.js", devicon: "nodejs-plain" },
   { name: "Express.js", devicon: "express-original" },
   { name: "Vite", devicon: "vitejs-plain" },
+  { name: "Golang", devicon: "go-plain colored"},
   { name: "Tailwind CSS", devicon: "tailwindcss-original" },
   { name: "HTML", devicon: "html5-plain" },
   { name: "Shadcn UI", icon: SiShadcnui, iconColor: "text-black dark:text-white" },

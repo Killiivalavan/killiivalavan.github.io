@@ -8,7 +8,7 @@ export const bucketListItems: BucketListItem[] = [
   { text: "drive a 911GT3RS on the autobahn", completed: false },
   { text: "swim with dolphins", completed: false },
   { text: "bunjee jump", completed: false },
-  { text: "build a home server", completed: false },
+  { text: "build a home server", completed: true },
   { text: "host DAISY in that home server", completed: false },
   { text: "own a nike phantom", completed: false },
   { text: "attend an EDM concert", completed: true },
