@@ -13,7 +13,7 @@ export const projects: Project[] = [
     title: "chesshell",
     description: "A CLI tool that lets you play chess in the terminal with a graphical board, daily puzzles from lichess and games with local Stockfish AI.",
     imageUrl: "/images/projects/chesshell-img.png",
-    url: "https://github.com/Killiivalavan/chesshell-cli",
+    url: "https://chesshell.pages.dev/",
     techStack: ["Golang"],
   },
   {
