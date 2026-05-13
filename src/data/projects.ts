@@ -39,5 +39,13 @@ export const projects: Project[] = [
     imageUrl: "/images/projects/thebside-logo.png",
     url: "https://thebside.club/",
     techStack: ["Vite", "Supabase"],
+  },
+  {
+    id: 5,
+    title: "callmeout",
+    description: "An accountability app that tracks your daily Git pushes and uses Discord webhooks to send you annoying reminders until you hit your goal.",
+    imageUrl: "/images/projects/callmeout-img.png",
+    url: "https://callmeout.vercel.app/",
+    techStack: ["Node.js", "HTML", "Supabase"],
   }
 ];
