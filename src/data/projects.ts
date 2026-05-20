@@ -19,7 +19,7 @@ export const projects: Project[] = [
   {
     id: 2,
     title: "D.A.I.S.Y",
-    description: "A JARVIS-inspired AI voice assistant that can connect with openclaw to get an upgraded experience.",
+    description: "A voice-activated personal AI assistant with sub-second latency. Features wake word activation with 13 tools including web search, file operations, and background task management.",
     imageUrl: "/images/projects/DAISY-logo.png",
     url: "https://github.com/Killiivalavan/DAISY",
     techStack: ["Python"],

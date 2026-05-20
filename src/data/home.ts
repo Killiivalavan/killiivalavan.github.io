@@ -20,7 +20,7 @@ export const homeData = {
     {
       id: 2,
       title: "D.A.I.S.Y",
-      description: "An AI centric voice assitant inspired by JARVIS",
+      description: "A voice-activated AI assistant with tool calling capabilities",
       url: "https://github.com/Killiivalavan/DAISY",
     },
   ]

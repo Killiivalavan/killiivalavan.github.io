@@ -7,9 +7,9 @@ export default function BucketListSection() {
     <div className="w-full h-full overflow-y-auto subtle-scrollbar flex flex-col items-center py-2">
       <div className="w-full max-w-[800px] flex flex-col items-start px-2 sm:px-8 pb-24 pt-6">
         <h1 className="font-chillax text-4xl text-left mb-8 text-foreground/90 tracking-tight">Bucket List</h1>
-        
+
         <p className="text-[14px] sm:text-[15px] text-left text-muted-foreground mb-12">
-          inspired by <a href="https://prarthanagarwal.me/bucket-list" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline decoration-muted-foreground/40 underline-offset-4 cursor-pointer">Prarthan Agarwal</a> - these are the things I want to do that can make me feel infinite!
+          inspired by <a href="https://prarthanagarwal.com/bucket-list" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline decoration-muted-foreground/40 underline-offset-4 cursor-pointer">Prarthan Agarwal</a> - these are the things I want to do that can make me feel infinite!
         </p>
 
         <div className="w-full">
