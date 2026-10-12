@@ -26,19 +26,19 @@ export const projects: Project[] = [
   },
   {
     id: 3,
+    title: "DumpIt.",
+    description: "A mobile-first journaling app that lets you get your thoughts out without the friction of traditional journaling, with offline-first writing, automatic cloud sync, and Google sign-in.",
+    imageUrl: "/images/projects/dumpit-logo.png",
+    url: "https://dumpit-app.pages.dev/",
+    techStack: ["React Native", "Supabase"],
+  },
+  {
+    id: 4,
     title: "tabstone",
     description: "A browser extension that helps you conquer tab clutter by archiving and organizing your tabs for a cleaner browsing experience.",
     imageUrl: "/images/projects/tabstone-img.png",
     url: "https://tabstone.vercel.app/",
     techStack: ["HTML", "JavaScript"],
-  },
-  {
-    id: 4,
-    title: "the B-side",
-    description: "A social network for music lovers to log, rate, and review their favorite albums and tracks, and discover new music.",
-    imageUrl: "/images/projects/thebside-logo.png",
-    url: "https://thebside.club/",
-    techStack: ["Vite", "Supabase"],
   },
   {
     id: 5,
@@ -47,5 +47,13 @@ export const projects: Project[] = [
     imageUrl: "/images/projects/callmeout-img.png",
     url: "https://callmeout.vercel.app/",
     techStack: ["Node.js", "HTML", "Supabase"],
+  },
+  {
+    id: 6,
+    title: "the B-side",
+    description: "A social network for music lovers to log, rate, and review their favorite albums and tracks, and discover new music (Currently under development).",
+    imageUrl: "/images/projects/thebside-logo.png",
+    url: "https://thebside.club/",
+    techStack: ["Vite", "Supabase"],
   }
 ];

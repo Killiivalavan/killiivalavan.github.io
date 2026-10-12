@@ -23,6 +23,7 @@ export const skills: Skill[] = [
   { name: "JavaScript", devicon: "javascript-plain" },
   { name: "TypeScript", devicon: "typescript-plain" },
   { name: "React", devicon: "react-original" },
+  { name: "React Native", devicon: "react-original" },
   { name: "Next.js", devicon: "nextjs-plain" },
   { name: "Node.js", devicon: "nodejs-plain" },
   { name: "Express.js", devicon: "express-original" },

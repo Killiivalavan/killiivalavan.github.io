@@ -24,25 +24,29 @@ function SkillIcon({ skill, className }: { skill: Skill; className?: string }) {
 
 // ── ProjectCard: extracted to eliminate duplicated JSX ──────────────────────
 function ProjectCard({ project }: { project: Project }) {
+  // Rule: `*-logo.png` = transparent, tightly-cropped mark.
+  //        `*-img.png`  = full-bleed screenshot.
+  // Single box for all cards so heights align: logos contain+center with
+  // padding on the card bg, screenshots cover+top edge-to-edge.
+  const isLogo = project.imageUrl.toLowerCase().includes('-logo');
   const inner = (
-    <article className="flex flex-col h-full bg-card rounded-2xl overflow-hidden border border-border/40 hover:shadow-xl hover:shadow-black/20 hover:border-border/80 transition-[box-shadow,border-color] duration-300 ease-out transform-gpu">
+    <article className="flex flex-col h-full min-w-0 w-full bg-card rounded-2xl overflow-hidden border border-border/40 hover:shadow-xl hover:shadow-black/20 hover:border-border/80 transition-[box-shadow,border-color] duration-300 ease-out transform-gpu">
       <div className="gg-c-cards__image-container p-4 pb-0 overflow-hidden transform-gpu">
         <div
-          className="gg-c-cards__image w-full aspect-[4/3] rounded-xl border border-border/10 bg-muted/10 relative overflow-hidden transition-transform duration-500 ease-out group-hover:scale-110 will-change-transform"
+          className="gg-c-cards__image w-full aspect-[16/10] sm:aspect-[4/3] rounded-xl border border-border/10 bg-muted/10 relative overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.03] will-change-transform"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
         >
           <Image
             src={project.imageUrl}
             alt={project.title}
             fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            className={isLogo ? 'object-contain object-center p-6 sm:p-8' : 'object-cover object-top'}
+            sizes="(max-width: 640px) 85vw, (max-width: 768px) 60vw, 33vw"
           />
           <div className="absolute inset-0 bg-transparent mix-blend-multiply opacity-0 group-hover:opacity-20 transition-opacity" />
         </div>
       </div>
       <div className="gg-c-cards__body flex flex-col flex-1 p-6 pb-2">
-        <span className="font-abril text-[12px] tracking-[0.1em] text-muted-foreground/60 mb-2">Project</span>
         <h2 className="gg-c-cards__title text-xl font-bold text-foreground mb-3 group-hover:text-teal-accent transition-colors">
           {project.title}
         </h2>
@@ -125,24 +129,23 @@ export default function Projects() {
     };
   }, []);
 
+  const scrollByCard = (direction: 1 | -1) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const firstCard = container.querySelector('li');
+    const cardWidth = firstCard ? firstCard.getBoundingClientRect().width + 16 : container.offsetWidth * 0.85;
+    container.scrollBy({
+      left: direction * cardWidth,
+      behavior: 'smooth',
+    });
+  };
+
   const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.offsetWidth;
-      scrollContainerRef.current.scrollBy({
-        left: -scrollAmount,
-        behavior: 'smooth',
-      });
-    }
+    scrollByCard(-1);
   };
 
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = scrollContainerRef.current.offsetWidth;
-      scrollContainerRef.current.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth',
-      });
-    }
+    scrollByCard(1);
   };
 
   const applyTransform = (index: number, x: number, y: number, scale: number = 1, rotation: number = 0) => {
@@ -319,48 +322,51 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-8 bg-background">
-      <div className="container-custom">
+    <section id="projects" className="py-8 bg-background w-full max-w-full min-w-0 overflow-x-clip md:overflow-visible">
+      <div className="w-full max-w-full min-w-0">
         {/* Projects Subsection */}
-        <div className="mb-16 projects-content">
-          <div className="mb-8">
-            <h2 className="font-chillax text-4xl text-foreground/90 mb-8 tracking-tight">Projects</h2>
+        <div className="mb-16 projects-content min-w-0">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="font-chillax text-4xl text-foreground/90 mb-2 tracking-tight">Projects</h2>
+            <p className="text-[13px] text-muted-foreground sm:hidden">swipe to explore →</p>
           </div>
 
-          <div className="relative w-full">
+          <div className="relative w-full max-w-full min-w-0">
             <ul
               ref={scrollContainerRef}
-              className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide"
+              className="flex gap-4 w-full max-w-full overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide pb-2 -mb-2"
               style={{ scrollPadding: '0 1rem' }}
             >
               {projects.map((project) => (
                 <li
                   key={project.id}
-                  className="flex-shrink-0 w-full md:w-1/3 snap-center px-2 first:pl-0 last:pr-0"
+                  className="flex-shrink-0 min-w-0 basis-[85%] sm:basis-[60%] md:basis-[calc(33.333%-10.67px)] snap-center"
                 >
                   <ProjectCard project={project} />
                 </li>
               ))}
             </ul>
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-4 z-10">
+            <div className="absolute top-1/2 left-1 md:left-0 -translate-y-1/2 md:-translate-x-4 z-10">
               {!isFirstVisible && (
                 <button
                   onClick={scrollLeft}
-                  className="bg-card/50 hover:bg-card/80 backdrop-blur-sm border border-border/20 text-foreground rounded-full p-2 shadow-lg"
+                  aria-label="Scroll projects left"
+                  className="bg-card/70 hover:bg-card/90 md:bg-card/50 md:hover:bg-card/80 backdrop-blur-sm border border-border/20 text-foreground rounded-full p-1.5 md:p-2 shadow-lg"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
               )}
             </div>
-            <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-4 z-10">
+            <div className="absolute top-1/2 right-1 md:right-0 -translate-y-1/2 md:translate-x-4 z-10">
               {!isLastVisible && (
                 <button
                   onClick={scrollRight}
-                  className="bg-card/50 hover:bg-card/80 backdrop-blur-sm border border-border/20 text-foreground rounded-full p-2 shadow-lg"
+                  aria-label="Scroll projects right"
+                  className="bg-card/70 hover:bg-card/90 md:bg-card/50 md:hover:bg-card/80 backdrop-blur-sm border border-border/20 text-foreground rounded-full p-1.5 md:p-2 shadow-lg"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -370,13 +376,13 @@ export default function Projects() {
         </div>
 
         {/* Tech Stack Subsection - Part of the same section */}
-        <div className="mb-8 tech-stack-content">
+        <div className="mb-8 tech-stack-content min-w-0">
           <div className="mb-8">
             <h3 className="font-chillax text-4xl text-foreground/90 mb-8 tracking-tight">Skills</h3>
           </div>
 
           {/* Skills Grid */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3 min-w-0">
             {skills.map((skill, index) => {
               return (
                 <div

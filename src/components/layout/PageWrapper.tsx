@@ -18,10 +18,10 @@ export default function PageWrapper({ children, scrollable = false }: { children
   });
 
   return (
-    <div className={`w-full flex flex-col items-center font-sans bg-background text-foreground ${
+    <div className={`w-full max-w-full min-w-0 flex flex-col items-center font-sans bg-background text-foreground overflow-x-clip ${
         scrollable ? 'min-h-screen' : 'min-h-screen lg:h-screen justify-center overflow-hidden'
       }`}>
-      <div className={`w-full max-w-[1016px] flex flex-col px-6 sm:px-12 lg:px-0 ${
+      <div className={`w-full max-w-[1016px] min-w-0 flex flex-col px-6 sm:px-12 lg:px-0 ${
         scrollable ? '' : 'h-full'
       }`}>
         <header className="w-full shrink-0 py-6">
@@ -43,9 +43,9 @@ export default function PageWrapper({ children, scrollable = false }: { children
         </header>
 
         {/* Main Content */}
-        <main className={`flex-1 w-full flex py-8 lg:py-0 relative scrollbar-hide ${
+        <main className={`flex-1 w-full max-w-full min-w-0 flex py-8 lg:py-0 relative scrollbar-hide ${
             scrollable
-              ? 'items-start'
+              ? 'items-start overflow-x-clip md:overflow-visible'
               : 'items-center justify-center overflow-y-auto'
           }`}>
           {children}
